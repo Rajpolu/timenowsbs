@@ -49,7 +49,7 @@ Timenow is a modern productivity web app that unifies essential time management 
 
 ```bash
 # Clone the repository
-git clone https://github.com/rajdigitech/timenowsbs.git
+git clone https://github.com/Rajpolu/timenowsbs.git
 
 # Navigate to project folder
 cd timenowsbs
