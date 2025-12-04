@@ -1,30 +1,94 @@
-# Time tracking web app
+# 🕒 Timenow — All-in-One Productivity & Time Management App
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+[![Live](https://img.shields.io/badge/Live-Demo-blue?style=flat&logo=vercel)](https://timenow.sbs)
+![Status](https://img.shields.io/badge/Status-Active-success?style=flat)
+![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat)
+![Built With](https://img.shields.io/badge/Built%20with-Next.js%20%7C%20TypeScript%20%7C%20TailwindCSS-black?style=flat)
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/rajpolus-projects/v0-time-tracking-web-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/rBZGD54TpMw)
+Timenow is a modern productivity web app that unifies essential time management tools into a single, elegant experience. It helps you stay focused, plan better, and manage your day with clarity—combining powerful global time utilities and productivity workflows in one place.
 
-## Overview
+🔗 **Live App:** https://timenow.sbs  
+📌 **Author:** Rajasekhar Reddy Polu (`@rajdigitech`)
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## 🚀 Key Features
 
-## Deployment
+### ⏱️ **Smart Time Tools**
+- Live Local Time Display  
+- Timezone Converter  
+- World Clock  
+- Stopwatch  
+- Countdown Timer  
 
-Your project is live at:
+### 🎯 **Focus Productivity**
+- Pomodoro Timer with session tracking  
+- Focus + break cycle automation  
+- Distraction-free interface  
 
-**[https://vercel.com/rajpolus-projects/v0-time-tracking-web-app](https://vercel.com/rajpolus-projects/v0-time-tracking-web-app)**
+### 🗓️ **Task & Work Planning**
+- Daily Task Planner  
+- Checklist-style organization  
+- Integrated with focus tools  
 
-## Build your app
+### 🌐 **Modern & Responsive**
+- Clean UI, mobile-friendly  
+- Dark & Light theme support  
+- Smooth transitions and fast interactions  
 
-Continue building your app on:
+## 🛠️ Tech Stack
 
-**[https://v0.app/chat/rBZGD54TpMw](https://v0.app/chat/rBZGD54TpMw)**
+| Category | Tools |
+|----------|-------|
+| Framework | Next.js 14 |
+| Language | TypeScript |
+| Styles | Tailwind CSS |
+| UI Components | Shadcn/UI |
+| Auth & Database | Supabase |
+| Deployment | Vercel |
 
-## How It Works
+## 📦 Installation & Setup
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+```bash
+# Clone the repository
+git clone https://github.com/rajdigitech/timenowsbs.git
+
+# Navigate to project folder
+cd timenowsbs
+
+# Install dependencies
+pnpm install     # or npm install / yarn install
+
+# Start developer server
+pnpm dev         # or npm run dev / yarn dev
+```
+> ⚠️ **Note:** If using Supabase features, make sure to configure your `.env` variables accordingly.
+
+## 📌 Upcoming Roadmap
+
+- 📊 **Personal Stats Dashboard**
+- 🔔 **Timer & Pomodoro Notifications**
+- 🏆 **Productivity Achievement Badges**
+- 📱 **PWA Support (Installable App)**
+- 👥 **Team Collaboration Tools**
+
+## 🤝 Contributing
+
+Contributions and feedback are very welcome!
+
+1. Fork this repository 🌱  
+2. Create your feature branch 🔧  
+3. Commit your changes 💡  
+4. Push to the branch 🚀  
+5. Open a pull request 🎉  
+
+## 📜 License
+
+This project is released under the **MIT License** — feel free to use, modify, and share responsibly.
+
+## 💙 Support
+
+If this project helps you stay productive, please support it by giving a ⭐ on GitHub.  
+Your support helps the project grow!
+
+> **Stay focused. Work smarter. Own your time.**
+
+
