@@ -55,8 +55,8 @@ export default function TimezonesPage() {
     <LayoutWithNav>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">Timezone Converter</h1>
-          <p className="text-muted-foreground">Convert time across different zones instantly</p>
+          <h1 className="sm:text-4xl md:text-5xl mb-2 tracking-normal italic font-black text-4xl">{"TIMEZONE CONVERTER"}</h1>
+          <p className="font-black text-xs tracking-[0.3em] text-yellow-400 text-left">CONVERT TIME ACROSS DIFFERENT ZONES INSTANTLY </p>
         </div>
 
         {/* Selected Timezones */}

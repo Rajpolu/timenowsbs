@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Play, Pause, RotateCcw, Plus, Minus } from "lucide-react"
+import { Play, Pause, RotateCcw, Plus, Minus, Lock } from "lucide-react"
 import { LayoutWithNav } from "@/app/layout-with-nav"
+import Link from "next/link"
 
 export default function PomodoroComponent() {
   const [workMinutes, setWorkMinutes] = useState(25)
@@ -12,6 +13,19 @@ export default function PomodoroComponent() {
   const [isWorkSession, setIsWorkSession] = useState(true)
   const [sessionsCompleted, setSessionsCompleted] = useState(0)
   const [alert, setAlert] = useState("")
+  const [isPremium, setIsPremium] = useState(false)
+
+  useEffect(() => {
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission()
+    }
+
+    const userEmail = localStorage.getItem("userEmail")
+    const premiumUsers = localStorage.getItem("premiumUsers")
+    if (userEmail && premiumUsers?.includes(userEmail)) {
+      setIsPremium(true)
+    }
+  }, [])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -21,6 +35,12 @@ export default function PomodoroComponent() {
       }, 1000)
     } else if (timeLeft === 0 && isRunning) {
       playAlert()
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification(isWorkSession ? "Work session complete!" : "Break time over!", {
+          body: isWorkSession ? "Time for a well-deserved break." : "Ready for another focus session?",
+          icon: "/placeholder.svg?key=x6xif",
+        })
+      }
       if (isWorkSession) {
         setSessionsCompleted((prev) => prev + 1)
         setAlert("Work session complete! Time for a break.")
@@ -66,117 +86,151 @@ export default function PomodoroComponent() {
     setIsWorkSession(true)
   }
 
+  const canChangeInterval = (newVal: number, current: number) => {
+    const presets = [15, 25, 45, 60]
+    if (isPremium) return true
+    if (presets.includes(newVal)) return true
+    return false
+  }
+
   return (
     <LayoutWithNav>
-      <div className="max-w-3xl mx-auto px-3 sm:px-6 py-6 sm:py-12">
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2">Pomodoro Timer</h1>
-          <p className="text-black/60">Stay focused with the Pomodoro Technique</p>
+      <div className="max-w-3xl mx-auto px-3 sm:px-6 py-6 sm:py-12 bg-black min-h-screen">
+        <div className="mb-6 sm:mb-8 text-center sm:text-left">
+          <h1 className="text-4xl sm:text-6xl font-black mb-2 text-white uppercase italic tracking-tighter">
+            Focus Timer
+          </h1>
+          <p className="text-[#F4C430] text-xs sm:text-sm font-black uppercase tracking-[0.3em]">
+            Master your deep work flow
+          </p>
         </div>
 
-        <div className="bg-white border-2 border-black rounded-2xl p-6 sm:p-12 mb-8 text-center">
-          <div className="mb-4">
-            <span className="text-sm font-semibold text-black/70">
+        <div className="bg-zinc-900 border-2 border-white/5 p-8 sm:p-16 mb-8 text-center shadow-[0_0_50px_rgba(0,0,0,0.5)] rounded-md">
+          <div className="mb-6">
+            <span className="px-4 py-1.5 bg-[#F4C430]/10 text-[#F4C430] border border-[#F4C430]/20 rounded-full text-xs font-black uppercase tracking-widest">
               {isWorkSession ? "🎯 Work Session" : "☕ Break Time"}
             </span>
           </div>
 
-          {/* Timer Display */}
-          <div className="text-6xl sm:text-8xl font-bold text-black font-mono mb-4">
+          <div className="sm:text-[10rem] font-black text-white font-mono mb-8 tracking-tighter leading-none text-7xl">
             {String(displayMinutes).padStart(2, "0")}:{String(displaySeconds).padStart(2, "0")}
           </div>
 
-          {/* Progress Bar */}
-          <div className="w-full bg-black/10 rounded-full h-2 mb-6 overflow-hidden">
-            <div className="bg-[#F4C430] h-full transition-all duration-300" style={{ width: `${progressPercent}%` }} />
+          <div className="w-full bg-white/5 rounded-full mb-10 overflow-hidden border border-white/5 h-2.5">
+            <div
+              className="bg-[#F4C430] h-full transition-all duration-300 shadow-[0_0_20px_rgba(244,196,48,0.4)]"
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
 
-          {alert && <div className="text-black font-semibold mb-4 text-base">{alert}</div>}
+          {alert && (
+            <div className="text-[#F4C430] font-black mb-8 text-xl animate-pulse italic uppercase">{alert}</div>
+          )}
 
-          {/* Controls */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center mb-8">
             <button
               onClick={() => setIsRunning(!isRunning)}
-              className="px-6 sm:px-8 py-3 bg-[#F4C430] text-black rounded-lg font-semibold hover:bg-[#E0B420] transition flex items-center justify-center gap-2 flex-1 sm:flex-none"
+              className="px-10 sm:px-14 py-5 bg-[#F4C430] text-black rounded-2xl font-black text-xl hover:scale-105 transition shadow-2xl shadow-[#F4C430]/20 flex items-center justify-center gap-3 flex-1 sm:flex-none uppercase italic"
             >
-              {isRunning ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              {isRunning ? <Pause className="w-7 h-7 fill-current" /> : <Play className="w-7 h-7 fill-current" />}
               {isRunning ? "Pause" : "Start"}
             </button>
             <button
               onClick={handleReset}
-              className="px-6 sm:px-8 py-3 bg-black/10 text-black rounded-lg font-semibold hover:bg-black/20 transition flex items-center justify-center gap-2 flex-1 sm:flex-none"
+              className="px-10 sm:px-14 py-5 bg-zinc-800 text-white border-2 border-white/5 rounded-2xl font-black text-xl hover:bg-zinc-700 transition flex items-center justify-center gap-3 flex-1 sm:flex-none uppercase italic shadow-xl"
             >
-              <RotateCcw className="w-5 h-5" />
+              <RotateCcw className="w-6 h-6" />
               Reset
             </button>
           </div>
 
-          <div className="text-sm text-black/70">
-            Sessions completed: <span className="font-bold text-black">{sessionsCompleted}</span>
+          <div className="text-sm text-white/40 uppercase tracking-widest font-black">
+            Sessions completed: <span className="text-white ml-1">{sessionsCompleted}</span>
           </div>
         </div>
 
-        {/* Configuration */}
-        <div className="bg-white border-2 border-black/10 rounded-xl p-6">
-          <h2 className="text-xl font-bold mb-6">Settings</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="bg-zinc-900 border border-white/5 rounded-2xl p-8 relative overflow-hidden">
+          {!isPremium && (
+            <div className="absolute top-4 right-4 z-10">
+              <Link
+                href="/pricing"
+                className="flex items-center text-[10px] font-black uppercase tracking-widest text-[#F4C430] hover:underline gap-2 py-0"
+              >
+                <Lock className="w-3 h-3" />
+                Unlock Custom Durations
+              </Link>
+            </div>
+          )}
+
+          <h2 className="text-xl font-black mb-8 uppercase tracking-tight text-white/90 mt-3.5">Timer Settings</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
-              <label className="block text-sm font-semibold mb-3">Work Duration (min)</label>
-              <div className="flex items-center gap-3">
+              <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-4">
+                Work Duration (min)
+              </label>
+              <div className="flex items-center gap-4">
                 <button
-                  onClick={() => setWorkMinutes(Math.max(1, workMinutes - 1))}
+                  onClick={() => setWorkMinutes(Math.max(1, workMinutes - 5))}
                   disabled={isRunning}
-                  className="p-2 bg-black/10 hover:bg-black/20 rounded-lg disabled:opacity-50 transition"
+                  className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-xl disabled:opacity-30 transition border border-white/5"
                 >
                   <Minus className="w-5 h-5" />
                 </button>
-                <input
-                  type="number"
-                  min="1"
-                  max="60"
-                  value={workMinutes}
-                  onChange={(e) => setWorkMinutes(Number(e.target.value))}
-                  disabled={isRunning}
-                  className="flex-1 px-4 py-2 bg-white border-2 border-black/10 rounded-lg text-center font-semibold disabled:opacity-50 focus:border-black focus:outline-none"
-                />
+                <div className="flex-1 relative">
+                  <input
+                    type="number"
+                    value={workMinutes}
+                    onChange={(e) => setWorkMinutes(Number(e.target.value))}
+                    disabled={isRunning || !isPremium}
+                    className="w-full py-3 bg-black border-white/10 rounded-xl text-center text-xl font-bold text-white focus:border-[#F4C430] focus:outline-none disabled:opacity-50 border-2 px-4"
+                  />
+                </div>
                 <button
-                  onClick={() => setWorkMinutes(Math.min(60, workMinutes + 1))}
+                  onClick={() => setWorkMinutes(Math.min(120, workMinutes + 5))}
                   disabled={isRunning}
-                  className="p-2 bg-black/10 hover:bg-black/20 rounded-lg disabled:opacity-50 transition"
+                  className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-xl disabled:opacity-30 transition border border-white/5"
                 >
                   <Plus className="w-5 h-5" />
                 </button>
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-3">Break Duration (min)</label>
-              <div className="flex items-center gap-3">
+              <label className="block text-xs font-black uppercase tracking-widest text-white/40 mb-4">
+                Break Duration (min)
+              </label>
+              <div className="flex items-center gap-4">
                 <button
-                  onClick={() => setBreakMinutes(Math.max(1, breakMinutes - 1))}
+                  onClick={() => setBreakMinutes(Math.max(1, breakMinutes - 5))}
                   disabled={isRunning}
-                  className="p-2 bg-black/10 hover:bg-black/20 rounded-lg disabled:opacity-50 transition"
+                  className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-xl disabled:opacity-30 transition border border-white/5"
                 >
                   <Minus className="w-5 h-5" />
                 </button>
-                <input
-                  type="number"
-                  min="1"
-                  max="30"
-                  value={breakMinutes}
-                  onChange={(e) => setBreakMinutes(Number(e.target.value))}
-                  disabled={isRunning}
-                  className="flex-1 px-4 py-2 bg-white border-2 border-black/10 rounded-lg text-center font-semibold disabled:opacity-50 focus:border-black focus:outline-none"
-                />
+                <div className="flex-1 relative">
+                  <input
+                    type="number"
+                    value={breakMinutes}
+                    onChange={(e) => setBreakMinutes(Number(e.target.value))}
+                    disabled={isRunning || !isPremium}
+                    className="w-full px-4 py-3 bg-black border-2 border-white/10 rounded-xl text-center text-xl font-bold text-white focus:border-[#F4C430] focus:outline-none disabled:opacity-50"
+                  />
+                </div>
                 <button
-                  onClick={() => setBreakMinutes(Math.min(30, breakMinutes + 1))}
+                  onClick={() => setBreakMinutes(Math.min(60, breakMinutes + 5))}
                   disabled={isRunning}
-                  className="p-2 bg-black/10 hover:bg-black/20 rounded-lg disabled:opacity-50 transition"
+                  className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-xl disabled:opacity-30 transition border border-white/5"
                 >
                   <Plus className="w-5 h-5" />
                 </button>
               </div>
             </div>
           </div>
+
+          {!isPremium && (
+            <p className="mt-8 text-xs text-white/30 italic text-center">
+              Free users are limited to 5-minute increments. Upgrade for per-minute control.
+            </p>
+          )}
         </div>
       </div>
     </LayoutWithNav>

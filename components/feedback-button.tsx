@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { MessageCircle, X } from "lucide-react"
+import { X } from "lucide-react"
 
 export function FeedbackButton() {
   const [isOpen, setIsOpen] = useState(false)
@@ -36,11 +36,16 @@ export function FeedbackButton() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 bg-[#F4C430] text-black rounded-full shadow-lg hover:bg-[#E0B420] transition-all duration-300 hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4C430]"
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#F4C430] text-black text-xs font-bold shadow-lg hover:bg-[#E0B420] transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4C430] writing-mode-vertical py-1.5 px-2 rounded-xs"
         aria-label="Send feedback"
         title="Send us feedback"
+        style={{
+          writingMode: "vertical-rl",
+          textOrientation: "mixed",
+          transformOrigin: "center",
+        }}
       >
-        <MessageCircle className="w-6 h-6" />
+        Feedback
       </button>
 
       {isOpen && (

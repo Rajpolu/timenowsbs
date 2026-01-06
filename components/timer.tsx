@@ -58,8 +58,8 @@ export default function TimerPage() {
     <LayoutWithNav>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">Timer</h1>
-          <p className="text-muted-foreground">Set countdowns with smart alarms</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl mb-2 font-black italic">{"TIMER"}</h1>
+          <p className="font-black tracking-[0.3em] text-xs text-yellow-400">SET COUNTDOWNS WITH SMART ALARMS </p>
         </div>
 
         {/* Timer Display - Large and mobile friendly */}

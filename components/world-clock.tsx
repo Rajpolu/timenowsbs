@@ -51,8 +51,8 @@ export default function WorldClockPage() {
     <LayoutWithNav>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
         <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">World Clock</h1>
-          <p className="text-muted-foreground">Check current time anywhere in the world</p>
+          <h1 className="sm:text-4xl md:text-5xl mb-2 italic font-black text-4xl">{"WORLD CLOCK"}</h1>
+          <p className="text-xs tracking-[0.3em] font-black text-yellow-400">CHECK CURRENT TIME ANYWHERE IN THE WORLD </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

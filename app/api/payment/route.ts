@@ -1,29 +1,41 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { stripe } from "@/lib/stripe"
 
-// This is a template route that would handle payment webhooks
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    const { plan } = body
 
-    const provider = request.headers.get("x-payment-provider") || body.provider
+    const priceId = plan === "annual" ? "price_1Sm5uUPbEDCmjAtisgHV0seJ" : "price_1Sm5uBPbEDCmjAtiBG2dTK5P"
 
-    if (provider === "stripe") {
-      // Handle Stripe webhook
-      // Verify signature, update subscription, send confirmation email
-      return NextResponse.json({ received: true }, { status: 200 })
-    } else if (provider === "razorpay") {
-      // Handle Razorpay webhook for Indian users
-      // Verify signature, update subscription, send confirmation email
-      return NextResponse.json({ received: true }, { status: 200 })
-    } else if (provider === "paypal") {
-      // Handle PayPal webhook for international users
-      // Verify signature, update subscription, send confirmation email
-      return NextResponse.json({ received: true }, { status: 200 })
+    // The user provided the Stripe integration, so we use the real SDK
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      mode: "subscription",
+      // Use the origin from headers to ensure correct redirect URLs in preview
+      success_url: `${request.nextUrl.origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${request.nextUrl.origin}/pricing`,
+    })
+
+    if (!session.url) {
+      throw new Error("Failed to create Stripe session URL")
     }
 
-    return NextResponse.json({ error: "Unknown provider" }, { status: 400 })
-  } catch (error) {
-    console.error("[v0] Payment webhook error:", error)
-    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 })
+    return NextResponse.json(
+      {
+        url: session.url,
+        success: true,
+      },
+      { status: 200 },
+    )
+  } catch (error: any) {
+    console.error("[v0] Stripe Checkout Error:", error)
+    return NextResponse.json({ error: error.message || "Payment failed" }, { status: 500 })
   }
 }

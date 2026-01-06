@@ -53,8 +53,8 @@ export default function StopwatchPage() {
     <LayoutWithNav>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-12 pb-24">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-2">Stopwatch</h1>
-          <p className="text-muted-foreground text-sm sm:text-base">Measure elapsed time with precision</p>
+          <h1 className="sm:text-3xl md:text-5xl mb-2 font-black text-4xl italic">STOPWATCH</h1>
+          <p className="sm:text-base text-xs tracking-[0.3em] text-yellow-400 font-black">MEASURE ELAPSED TIME WITH PRECISION </p>
         </div>
 
         {/* Timer Display */}

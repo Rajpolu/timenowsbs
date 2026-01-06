@@ -1,5 +1,5 @@
 "use client"
-import { Check, Sparkles } from "lucide-react"
+import { Check } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { PaymentButton } from "@/components/payment-button"
@@ -9,6 +9,7 @@ export default function PricingPage() {
   const [isAnnual, setIsAnnual] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null)
+  const [activeTab, setActiveTab] = useState<"standard" | "premium">("standard")
 
   useEffect(() => {
     setMounted(true)
@@ -38,24 +39,48 @@ export default function PricingPage() {
     "Limited to 5 tasks/day",
   ]
 
-  const proFeatures = [
+  const standardFeatures = [
     "Everything in Free +",
     "Advanced Daily Planner",
     "Unlimited tasks",
     "Custom work intervals",
     "Session analytics",
-    "Export data",
     "Priority support",
-    "Ad-free experience",
   ]
 
-  const regularPrice = isAnnual ? 71.88 : 5.99
-  const discountedPrice = 4.79
+  const premiumFeatures = [
+    "Everything in Standard +",
+    "Personal Stats Dashboard",
+    "Export session data (CSV/JSON)",
+    "API Access for developers",
+    "Ad-free experience",
+    "Early access to beta tools",
+  ]
+
+  const prices = {
+    standard: {
+      monthly: 5.99,
+      annual: 4.79, // $5.99 * 0.8
+    },
+    premium: {
+      monthly: 11.98,
+      annual: 9.58, // $11.98 * 0.8
+    },
+  }
+
+  const currentPrice =
+    activeTab === "standard"
+      ? isAnnual
+        ? prices.standard.annual
+        : prices.standard.monthly
+      : isAnnual
+        ? prices.premium.annual
+        : prices.premium.monthly
 
   if (!mounted) return null
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black text-white font-sans">
       {notification && (
         <div
           className={`fixed top-4 right-4 px-4 py-3 rounded-lg z-50 ${
@@ -67,179 +92,155 @@ export default function PricingPage() {
         </div>
       )}
 
-      <header className="border-b border-white/10 sticky top-0 z-50 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="text-2xl font-bold text-[#F4C430]">⏱</div>
-            <span className="text-xl font-bold hidden sm:inline text-white">timenow.sbs</span>
+      <header className="border-b border-white/5 sticky top-0 z-50 bg-black/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 font-black text-xl italic tracking-tighter">
+            <span className="text-2xl drop-shadow-[0_0_10px_rgba(244,196,48,0.5)]">⏱</span>
+            <span className="uppercase">timenow.sbs</span>
           </Link>
-          <Link href="/" className="text-white hover:text-[#F4C430] transition">
-            Back
+          <Link href="/" className="text-white hover:text-[#F4C430] transition text-sm font-medium">
+            Back to Home
           </Link>
         </div>
       </header>
 
-      <div className="bg-gradient-to-r from-[#F4C430]/20 to-[#F4C430]/10 border-b border-[#F4C430]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-center gap-2 text-sm">
-          <Sparkles className="w-4 h-4 text-[#F4C430] flex-shrink-0" aria-hidden="true" />
-          <span className="text-white">
-            🎉 Limited Time: <strong>20% OFF</strong> - then just <strong>$4.79/month</strong> - Expires in {hours}h{" "}
-            {minutes}m
+      <div className="flex justify-center py-6">
+        <div className="inline-flex items-center gap-2 px-6 py-2 bg-zinc-950 border border-[#F4C430]/20 rounded-2xl shadow-2xl">
+          <div className="bg-[#F4C430] text-black text-[9px] font-black px-2 py-0.5 rounded-md uppercase italic leading-none">
+            SALE
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
+            20% OFF ANNUAL — <span className="text-[#F4C430]">LIMITED TIME</span>
           </span>
         </div>
       </div>
 
-      <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-white">Pricing</h1>
-            <p className="text-lg text-white/60 mb-6">Start free, upgrade whenever you need more power</p>
+      <section className="px-6 py-12 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16 px-4">
+            <h1 className="text-5xl md:text-8xl font-black mb-6 uppercase italic tracking-tighter">Pricing</h1>
+            <p className="text-white/40 text-xs md:text-base font-medium max-w-xl mx-auto leading-relaxed mb-12">
+              Precision tools for elite performers. Choose your level of focus.
+            </p>
 
-            <div className="flex items-center justify-center gap-4 bg-zinc-900 border border-white/10 rounded-lg p-2 w-fit mx-auto">
-              <button
-                onClick={() => setIsAnnual(false)}
-                className={`px-4 py-2 rounded font-semibold transition ${
-                  !isAnnual ? "bg-[#F4C430] text-black" : "text-white/60 hover:text-white"
-                }`}
-                aria-pressed={!isAnnual}
+            <div className="flex justify-center mb-10">
+              <div className="flex p-1 bg-zinc-950 border border-white/5 rounded-2xl w-full max-w-[280px] sm:max-w-xs gap-1">
+                <button
+                  onClick={() => setActiveTab("standard")}
+                  className={`flex-1 py-3 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                    activeTab === "standard" ? "bg-[#F4C430] text-black shadow-xl" : "text-white/40 hover:text-white"
+                  }`}
+                >
+                  Standard
+                </button>
+                <button
+                  onClick={() => setActiveTab("premium")}
+                  className={`flex-1 py-3 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                    activeTab === "premium" ? "bg-[#F4C430] text-black shadow-xl" : "text-white/40 hover:text-white"
+                  }`}
+                >
+                  Premium
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 sm:gap-6">
+              <span
+                className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition ${!isAnnual ? "text-[#F4C430]" : "text-white/20"}`}
               >
                 Monthly
-              </button>
+              </span>
               <button
-                onClick={() => setIsAnnual(true)}
-                className={`px-4 py-2 rounded font-semibold transition ${
-                  isAnnual ? "bg-[#F4C430] text-black" : "text-white/60 hover:text-white"
-                }`}
-                aria-pressed={isAnnual}
+                onClick={() => setIsAnnual(!isAnnual)}
+                className="relative w-12 sm:w-14 bg-zinc-900 rounded-full border border-white/10 transition-all duration-300 sm:h-[26px] h-[22px]"
               >
-                Annual
+                <div
+                  className={`absolute top-0.5 left-0.5 w-4 h-4 sm:w-5 rounded-full transition-all duration-500 sm:h-5 font-normal ${
+                    isAnnual ? "translate-x-6 sm:translate-x-7 bg-[#F4C430]" : "bg-white/40"
+                  }`}
+                />
               </button>
-              {isAnnual && <span className="text-xs bg-red-500 text-white px-2 py-1 rounded">Save 20%</span>}
+              <div className="flex flex-col items-start">
+                <span
+                  className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition ${isAnnual ? "text-[#F4C430]" : "text-white/20"}`}
+                >
+                  Annually
+                </span>
+                <span className="text-[8px] text-[#F4C430] font-black uppercase tracking-tighter leading-none">
+                  -20%
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            <div className="bg-card border border-border rounded-lg p-6 sm:p-8">
-              <h2 className="text-2xl font-bold mb-2">Free</h2>
-              <p className="text-muted-foreground text-sm mb-6">Perfect for getting started</p>
-              <div className="mb-8">
-                <div className="text-4xl font-bold">$0</div>
-                <p className="text-sm text-muted-foreground mt-1">Forever free</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            <div className="bg-zinc-950 border border-white/5 rounded-3xl p-10 flex flex-col hover:border-white/10 transition-colors">
+              <h2 className="text-sm font-black text-white/40 uppercase tracking-[0.2em] mb-4">Base Plan</h2>
+              <div className="mb-10">
+                <div className="text-6xl font-black text-white tracking-tighter">$0</div>
+                <p className="text-[10px] text-white/20 mt-3 font-black uppercase tracking-widest">
+                  Free for individuals
+                </p>
               </div>
               <Link
-                href="/timezones"
-                className="w-full py-2 px-4 bg-secondary text-secondary-foreground rounded-lg font-semibold hover:opacity-90 transition text-center block"
+                href="/auth"
+                className="w-full h-14 bg-white/5 border border-white/10 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-white/10 transition flex items-center justify-center mb-10 text-xs"
               >
-                Get Started
+                {"CURRENT PLAN"}
               </Link>
-              <div className="mt-8 space-y-4">
-                {freeFeatures.map((feature, i) => (
+              <div className="space-y-4 flex-grow">
+                {freeFeatures.map((f, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
-                    <span className="text-sm">{feature}</span>
+                    <Check className="w-4 h-4 text-[#F4C430] mt-0.5" />
+                    <span className="text-sm text-white/80">{f}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-primary/10 to-accent/10 border-2 border-primary rounded-lg p-6 sm:p-8 relative overflow-hidden">
-              <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-                MOST POPULAR
+            <div className="bg-zinc-950 border-2 border-[#F4C430] rounded-3xl p-10 flex flex-col relative shadow-[0_0_60px_rgba(244,196,48,0.1)]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#F4C430] text-black text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest ring-8 ring-black">
+                Performance Tier
               </div>
+              <h2 className="text-sm font-black text-[#F4C430] uppercase tracking-[0.2em] mb-4">
+                {activeTab === "premium" ? "Premium Elite" : "Standard Pro"}
+              </h2>
 
-              <h2 className="text-2xl font-bold mb-2">Pro</h2>
-              <p className="text-muted-foreground text-sm mb-6">For power users</p>
-
-              <div className="mb-8">
+              <div className="mb-10">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-sm line-through text-muted-foreground">${regularPrice.toFixed(2)}</span>
-                  <div>
-                    <div className="text-4xl font-bold text-primary">${discountedPrice.toFixed(2)}</div>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {isAnnual ? "/year (billed once)" : "/month"}{" "}
-                      <span className="text-primary font-bold">20% OFF</span>
-                    </p>
-                  </div>
+                  <div className="text-7xl font-black text-white tracking-tighter">${currentPrice.toFixed(2)}</div>
+                  <div className="text-white/20 text-xs font-black uppercase tracking-widest">/mo</div>
                 </div>
+                <p className="text-[10px] text-white/40 mt-3 font-black uppercase tracking-widest">
+                  {isAnnual ? `Billed $${(currentPrice * 12).toFixed(2)} annually` : "Billed monthly"}
+                </p>
               </div>
 
               <PaymentButton
-                price={discountedPrice}
+                price={currentPrice}
                 plan={isAnnual ? "annual" : "monthly"}
-                onSuccess={() => {
-                  showNotification("success", "Payment successful! You now have access to Pro features.")
-                }}
-                onError={(error) => {
-                  showNotification("error", `Payment failed: ${error}`)
-                }}
+                onSuccess={() => showNotification("success", "Welcome to the Pro family!")}
+                onError={(e) => showNotification("error", e)}
               />
 
-              <p className="text-xs text-center text-muted-foreground mt-2">
-                {isAnnual ? "Next payment: 12 months" : "Cancel anytime"}
-              </p>
-
-              <div className="mt-8 space-y-4">
-                {proFeatures.map((feature, i) => (
+              <div className="mt-8 space-y-4 flex-grow">
+                {(activeTab === "premium" ? premiumFeatures : standardFeatures).map((f, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
-                    <span className="text-sm">{feature}</span>
+                    <Check className="w-4 h-4 text-[#F4C430] mt-0.5" />
+                    <span className="text-sm font-medium">{f}</span>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-
-          <div className="mt-12 bg-card border border-border rounded-lg p-6 text-center">
-            <p className="text-sm text-muted-foreground mb-4">
-              💳 <strong>14-day free trial</strong> on Pro plan. No credit card required to start free plan.
-            </p>
-            <p className="text-xs text-muted-foreground">
-              All prices include 20% limited-time discount. Offer expires in {hours}h {minutes}m
-            </p>
           </div>
         </div>
       </section>
 
-      <footer className="border-t border-white/10 mt-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="font-semibold mb-4 text-white">Legal</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link href="/terms" className="text-white/60 hover:text-white transition">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="text-white/60 hover:text-white transition">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/refund" className="text-white/60 hover:text-white transition">
-                    Refund Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white">Support</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="mailto:support@timenow.sbs" className="text-white/60 hover:text-white transition">
-                    Contact Us
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs text-white/60">Payment methods: Stripe (International), Razorpay (India), PayPal</p>
-            </div>
-          </div>
-          <div className="border-t border-white/10 pt-8 text-center text-sm text-white/60">
-            <p>&copy; 2025 timenow.sbs. All rights reserved.</p>
-          </div>
+      <footer className="border-t border-white/5 mt-20 pb-12">
+        <div className="max-w-7xl mx-auto px-4 text-center pt-12">
+          <p className="text-white/20 text-[10px] uppercase tracking-[0.2em]">
+            App by <span className="text-[#F4C430] font-bold">RajPolu</span>
+          </p>
         </div>
       </footer>
     </div>
