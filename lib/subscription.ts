@@ -25,23 +25,31 @@ export async function getSubscriptionStatus(userId: string) {
 
     if (error) {
       console.log("[v0] No subscription found for user")
-      return { isPremium: false, status: "free", plan: "free" }
+      return { isPremium: false, isStandard: false, status: "free", plan: "free" }
     }
 
-    const isPremium = data?.status === "active" && data?.plan_name !== "free"
+    const isPremium = data?.status === "active" && data?.plan_name === "premium"
+    const isStandard = data?.status === "active" && data?.plan_name === "standard"
+
     return {
       isPremium,
+      isStandard,
       status: data?.status || "free",
       plan: data?.plan_name || "free",
       stripeSubscriptionId: data?.stripe_subscription_id,
+      stripeCustomerId: data?.stripe_customer_id,
     }
   } catch (error) {
     console.error("[v0] Error fetching subscription:", error)
-    return { isPremium: false, status: "free", plan: "free" }
+    return { isPremium: false, isStandard: false, status: "free", plan: "free" }
   }
 }
 
-export async function createOrUpdateSubscription(userId: string, stripeCustomerId: string, plan: "free" | "pro") {
+export async function createOrUpdateSubscription(
+  userId: string,
+  stripeCustomerId: string,
+  plan: "free" | "standard" | "premium",
+) {
   try {
     const cookieStore = await cookies()
     const supabase = createServerClient(
@@ -67,8 +75,9 @@ export async function createOrUpdateSubscription(userId: string, stripeCustomerI
         {
           user_id: userId,
           stripe_customer_id: stripeCustomerId,
-          status: plan === "pro" ? "active" : "free",
+          status: plan === "free" ? "free" : "active",
           plan_name: plan,
+          updated_at: new Date().toISOString(),
         },
         { onConflict: "user_id" },
       )

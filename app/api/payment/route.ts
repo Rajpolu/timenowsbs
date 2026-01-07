@@ -4,11 +4,21 @@ import { stripe } from "@/lib/stripe"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { plan } = body
+    const { plan, planType } = body
 
-    const priceId = plan === "annual" ? "price_1Sm5uUPbEDCmjAtisgHV0seJ" : "price_1Sm5uBPbEDCmjAtiBG2dTK5P"
+    const priceMap: Record<string, Record<string, string>> = {
+      standard: {
+        monthly: "price_1Sm5uBPbEDCmjAtiBG2dTK5P", // $5.99/mo
+        annual: "price_1Sm5uUPbEDCmjAtisgHV0seJ", // $47.92/yr (20% off)
+      },
+      premium: {
+        monthly: "price_1Smp3QPbEDCmjAtikX1XefQc", // $11.98/mo
+        annual: "price_1Smp3nPbEDCmjAtijMPZe3Jp", // $114.86/yr (20% off)
+      },
+    }
 
-    // The user provided the Stripe integration, so we use the real SDK
+    const priceId = priceMap[planType || "standard"]?.[plan] || priceMap.standard.monthly
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -18,9 +28,12 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: "subscription",
-      // Use the origin from headers to ensure correct redirect URLs in preview
-      success_url: `${request.nextUrl.origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${request.nextUrl.origin}/auth/callback?session_id={CHECKOUT_SESSION_ID}&plan=${planType}`,
       cancel_url: `${request.nextUrl.origin}/pricing`,
+      metadata: {
+        planType: planType || "standard",
+        billingPeriod: plan,
+      },
     })
 
     if (!session.url) {

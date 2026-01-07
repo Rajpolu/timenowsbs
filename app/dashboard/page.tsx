@@ -36,6 +36,7 @@ import { Zap } from "lucide-react"
 export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [isPremium, setIsPremium] = useState(false)
+  const [isStandard, setIsStandard] = useState(false)
   const [stats, setStats] = useState({
     focusMinutes: 0,
     tasksCompleted: 0,
@@ -59,12 +60,19 @@ export default function Dashboard() {
       }
 
       const subscription = await getSubscriptionStatus(user.id)
-      setIsPremium(subscription.isPremium)
 
-      if (!subscription.isPremium) {
+      // Set both isPremium and isStandard based on actual subscription
+      setIsPremium(subscription.isPremium)
+      setIsStandard(subscription.isStandard)
+      const isStandardOrPremium = subscription.isStandard || subscription.isPremium
+
+      // Redirect free users away from premium dashboard
+      if (!isStandardOrPremium) {
         setTimeout(() => {
           router.push("/pricing")
         }, 500)
+        setLoading(false)
+        return
       }
 
       const { data: tasks } = await supabase.from("tasks").select("*").eq("user_id", user.id)
@@ -117,7 +125,7 @@ export default function Dashboard() {
     )
   }
 
-  if (!isPremium) {
+  if (!isPremium && !isStandard) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
@@ -400,9 +408,14 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-12 text-center">
-          <Link href="/pricing" className="text-xs text-[#F4C430] hover:underline font-black tracking-widest uppercase">
-            Upgrade to Premium for full analytics &rarr;
-          </Link>
+          {isStandard && (
+            <Link
+              href="/pricing"
+              className="text-xs text-[#F4C430] hover:underline font-black tracking-widest uppercase"
+            >
+              Upgrade to Premium for full analytics &rarr;
+            </Link>
+          )}
         </div>
       </main>
     </div>

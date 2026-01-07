@@ -7,11 +7,12 @@ import { Loader2 } from "lucide-react"
 interface PaymentButtonProps {
   price: number
   plan: "monthly" | "annual"
+  planType?: "standard" | "premium"
   onSuccess?: () => void
   onError?: (error: string) => void
 }
 
-export function PaymentButton({ price, plan, onSuccess, onError }: PaymentButtonProps) {
+export function PaymentButton({ price, plan, planType = "standard", onSuccess, onError }: PaymentButtonProps) {
   const [isLoading, setIsLoading] = useState(false)
 
   const handlePayment = async () => {
@@ -20,7 +21,7 @@ export function PaymentButton({ price, plan, onSuccess, onError }: PaymentButton
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ price, plan }),
+        body: JSON.stringify({ plan, planType }),
       })
 
       if (!response.ok) throw new Error("Payment failed")
@@ -31,14 +32,12 @@ export function PaymentButton({ price, plan, onSuccess, onError }: PaymentButton
 
         if (typeof window !== "undefined") {
           try {
-            // Attempt to redirect the top-most window directly
             if (window.top) {
               window.top.location.href = data.url
             } else {
               window.location.href = data.url
             }
           } catch (e) {
-            // If the redirect is blocked by sandbox/CSP, open in a new tab as a foolproof fallback
             window.open(data.url, "_blank", "noopener,noreferrer")
           }
         }

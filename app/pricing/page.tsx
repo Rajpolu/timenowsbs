@@ -219,6 +219,7 @@ export default function PricingPage() {
               <PaymentButton
                 price={currentPrice}
                 plan={isAnnual ? "annual" : "monthly"}
+                planType={activeTab}
                 onSuccess={() => showNotification("success", "Welcome to the Pro family!")}
                 onError={(e) => showNotification("error", e)}
               />
