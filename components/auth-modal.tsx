@@ -77,7 +77,7 @@ export function AuthModal({ isOpen, onClose, onSubmit }: AuthModalProps) {
     }
   }
 
-  const handleOAuthClick = async (provider: "google" | "facebook") => {
+  const handleOAuthClick = async (provider: "google" | "facebook" | "github") => {
     setLoading(true)
     setError(null)
     try {
@@ -142,6 +142,14 @@ export function AuthModal({ isOpen, onClose, onSubmit }: AuthModalProps) {
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "F"}
             Continue with Facebook
+          </button>
+          <button
+            onClick={() => handleOAuthClick("github")}
+            disabled={loading}
+            className="w-full h-12 bg-[#333333] text-white rounded-xl font-black uppercase tracking-widest hover:bg-[#444444] transition disabled:opacity-50 flex items-center justify-center gap-3 text-xs shadow-lg"
+          >
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "G"}
+            Continue with GitHub
           </button>
         </div>
 

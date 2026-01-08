@@ -78,6 +78,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isPremium, setIsPremium] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -110,7 +111,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-[#F4C430] selection:text-black">
-      <AuthModal isOpen={false} onClose={() => {}} onSubmit={handleAuthSubmit} />
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} onSubmit={handleAuthSubmit} />
 
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -166,7 +167,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <Link
               href="/timezones"
-              className="px-10 py-4 bg-[#F4C430] text-black rounded-xl font-black text-lg hover:scale-105 transition-all shadow-[0_0_40px_rgba(244,196,48,0.2)] flex items-center justify-center gap-3 uppercase italic tracking-tighter"
+              className="px-10 py-4 bg-[#F4C430] text-black rounded-xl font-black text-lg hover:scale-105 transition-all shadow-[0_0_40px_rgba(244,196,48,0.2)] flex items-center justify-center gap-3 uppercase tracking-tighter italic"
             >
               START FOR FREE <ChevronRight className="w-5 h-5" />
             </Link>

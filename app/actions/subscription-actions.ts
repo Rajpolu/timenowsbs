@@ -4,6 +4,8 @@ import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 import type { SubscriptionStatus } from "@/lib/subscription"
 
+export { getSubscriptionStatus as getSubscriptionStatusAction }
+
 export async function getSubscriptionStatus(userId: string): Promise<SubscriptionStatus> {
   try {
     const cookieStore = await cookies()

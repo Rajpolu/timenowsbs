@@ -1,30 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { stripe } from "@/lib/stripe"
-import { createServerClient } from "@supabase/ssr"
-import { cookies } from "next/headers"
+import { createClient } from "@supabase/supabase-js"
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ""
 
 async function updateSubscriptionInDB(customerId: string, planType: string, status: string) {
   try {
-    const cookieStore = await cookies()
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options)
-            })
-          },
-        },
-      },
-    )
+    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 
+    // First, find the user by Stripe customer ID
     const { data: subscription, error: findError } = await supabase
       .from("subscriptions")
       .select("user_id")
@@ -32,10 +16,11 @@ async function updateSubscriptionInDB(customerId: string, planType: string, stat
       .single()
 
     if (findError || !subscription) {
-      console.error("[v0] Subscription not found for customer:", customerId)
+      console.error("[v0] Subscription not found for customer:", customerId, findError)
       return
     }
 
+    // Update the subscription with new plan and status
     const { error: updateError } = await supabase
       .from("subscriptions")
       .update({
@@ -47,13 +32,31 @@ async function updateSubscriptionInDB(customerId: string, planType: string, stat
 
     if (updateError) {
       console.error("[v0] Error updating subscription:", updateError)
+    } else {
+      console.log("[v0] Successfully updated subscription for user:", subscription.user_id, "Plan:", planType)
     }
   } catch (error) {
     console.error("[v0] Error in updateSubscriptionInDB:", error)
   }
 }
 
+function determinePlanFromPrice(priceId: string | undefined): string | undefined {
+  // Map actual Stripe price IDs to plan names
+  const priceMap: Record<string, string> = {
+    price_1Sm5uBPbEDCmjAtiBG2dTK5P: "standard", // Standard monthly
+    price_1Sm5uUPbEDCmjAtisgHV0seJ: "standard", // Standard annual
+    price_1Smp3QPbEDCmjAtikX1XefQc: "premium", // Premium monthly
+    price_1Smp3nPbEDCmjAtijMPZe3Jp: "premium", // Premium annual
+  }
+  return priceMap[priceId || ""]
+}
+
 export async function POST(request: NextRequest) {
+  if (!webhookSecret) {
+    console.error("[v0] STRIPE_WEBHOOK_SECRET is not configured")
+    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 500 })
+  }
+
   const body = await request.text()
   const signature = request.headers.get("stripe-signature") || ""
 
@@ -64,14 +67,24 @@ export async function POST(request: NextRequest) {
       case "customer.subscription.created":
       case "customer.subscription.updated": {
         const subscription = event.data.object as any
-        const planType = subscription.metadata?.planType || "standard"
+        const planType =
+          subscription.metadata?.planType || determinePlanFromPrice(subscription.items.data[0]?.price?.id) || "standard"
+
+        console.log("[v0] Processing subscription event:", event.type, "Plan:", planType)
         await updateSubscriptionInDB(subscription.customer, planType, subscription.status)
         break
       }
 
       case "customer.subscription.deleted": {
         const subscription = event.data.object as any
+        console.log("[v0] Processing subscription deletion for customer:", subscription.customer)
         await updateSubscriptionInDB(subscription.customer, "free", "canceled")
+        break
+      }
+
+      case "checkout.session.completed": {
+        const session = event.data.object as any
+        console.log("[v0] Checkout session completed:", session.id, "Customer:", session.customer)
         break
       }
 
@@ -92,6 +105,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ received: true }, { status: 200 })
   } catch (error: any) {
     console.error("[v0] Webhook Error:", error.message)
+    // Return 400 for signature verification failures so Stripe retries
     return NextResponse.json({ error: "Webhook failed" }, { status: 400 })
   }
 }
