@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { getSubscriptionStatus } from "@/lib/subscription"
+import { getSubscriptionStatus } from "@/app/actions/subscription-actions"
 import { ArrowLeft, BarChart3, Download, Zap } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -28,7 +28,6 @@ export default function PremiumDashboard() {
 
         setUser(session.user)
 
-        // Check if user is premium
         const subscription = await getSubscriptionStatus(session.user.id)
         const isPremiumUser = subscription.isPremium
 
