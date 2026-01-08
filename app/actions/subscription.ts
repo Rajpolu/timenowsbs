@@ -1,16 +1,9 @@
+"use server"
+
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 
-export type SubscriptionStatus = {
-  isPremium: boolean
-  isStandard: boolean
-  status: "free" | "active"
-  plan: "free" | "standard" | "premium"
-  stripeSubscriptionId?: string
-  stripeCustomerId?: string
-}
-
-export async function getSubscriptionStatus(userId: string): Promise<SubscriptionStatus> {
+export async function getSubscriptionStatusAction(userId: string) {
   try {
     const cookieStore = await cookies()
     const supabase = createServerClient(
@@ -54,7 +47,7 @@ export async function getSubscriptionStatus(userId: string): Promise<Subscriptio
   }
 }
 
-export async function createOrUpdateSubscription(
+export async function createOrUpdateSubscriptionAction(
   userId: string,
   stripeCustomerId: string,
   plan: "free" | "standard" | "premium",

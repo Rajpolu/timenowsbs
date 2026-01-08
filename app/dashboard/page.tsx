@@ -2,8 +2,9 @@
 import Link from "next/link"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-
+import { getSubscriptionStatusAction } from "@/app/actions/subscription"
 import { useState } from "react"
+import { Zap } from "lucide-react" // Import Zap here
 
 import {
   LineChart,
@@ -30,8 +31,6 @@ import {
   Lock,
 } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
-import { getSubscriptionStatus } from "@/lib/subscription"
-import { Zap } from "lucide-react"
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true)
@@ -59,14 +58,12 @@ export default function Dashboard() {
         return
       }
 
-      const subscription = await getSubscriptionStatus(user.id)
+      const subscription = await getSubscriptionStatusAction(user.id)
 
-      // Set both isPremium and isStandard based on actual subscription
       setIsPremium(subscription.isPremium)
       setIsStandard(subscription.isStandard)
       const isStandardOrPremium = subscription.isStandard || subscription.isPremium
 
-      // Redirect free users away from premium dashboard
       if (!isStandardOrPremium) {
         setTimeout(() => {
           router.push("/pricing")
@@ -183,7 +180,7 @@ export default function Dashboard() {
               Real-time Productivity Analytics
             </p>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40">
+          <div className="flex items-center gap-2 px-4 py-2 bg-zinc-950 border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/40">
             <Calendar className="w-3.5 h-3.5" /> This Billing Cycle
           </div>
         </div>
