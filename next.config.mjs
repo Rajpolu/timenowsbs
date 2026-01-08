@@ -6,7 +6,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
- 
+  swcMinify: true,
+  productionBrowserSourceMaps: false,
+  experimental: {
+    optimizePackageImports: ["lucide-react", "recharts"],
+  },
 }
 
 export default nextConfig
