@@ -116,7 +116,11 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2" role="banner">
-            <div className="text-primary font-semibold text-xl">{""} </div>
+            <img 
+              src="/logo.png" 
+              alt="timenow.sbs logo" 
+              className="w-10 h-10" 
+            />
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold hidden sm:inline">timenow.sbs</span>
               <span className="relative inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold text-black overflow-hidden bg-yellow-400">
@@ -301,7 +305,11 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12">
             <div className="max-w-xs">
               <div className="flex items-center gap-2 mb-6">
-                <div className="text-2xl font-bold text-[#F4C430]">⏱</div>
+                <img 
+                  src="/logo.png" 
+                  alt="timenow.sbs logo" 
+                  className="w-10 h-10" 
+                />
                 <span className="text-xl font-bold text-white">timenow.sbs</span>
               </div>
               <p className="text-white/40 text-sm leading-relaxed mb-8">
