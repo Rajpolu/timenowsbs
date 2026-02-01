@@ -8,12 +8,12 @@ export async function POST(request: NextRequest) {
 
     const priceMap: Record<string, Record<string, string>> = {
       standard: {
-        monthly: "price_1Sm5uBPbEDCmjAtiBG2dTK5P", // $5.99/mo
-        annual: "price_1Sm5uUPbEDCmjAtisgHV0seJ", // $47.92/yr (20% off)
+        monthly: "price_1Sq64VPtIW29llGuCrdlYqZE", // $5.99/mo
+        annual: "price_1Sq64VPtIW29llGulVwh6yoR", // $47.92/yr (20% off)
       },
       premium: {
-        monthly: "price_1Smp3QPbEDCmjAtikX1XefQc", // $11.98/mo
-        annual: "price_1Smp3nPbEDCmjAtijMPZe3Jp", // $114.86/yr (20% off)
+        monthly: "price_1Sq64VPtIW29llGuIBfiXcvx", // $11.98/mo
+        annual: "price_1Sq64VPtIW29llGuv0N9CfhY", // $114.86/yr (20% off)
       },
     }
 
