@@ -47,7 +47,7 @@ Timenow is a modern productivity web app that unifies essential time management 
 
 ## 📦 Installation & Setup
 
-```bash
+\`\`\`bash
 # Clone the repository
 git clone https://github.com/Rajpolu/timenowsbs.git
 
@@ -59,7 +59,7 @@ pnpm install     # or npm install / yarn install
 
 # Start developer server
 pnpm dev         # or npm run dev / yarn dev
-```
+\`\`\`
 > ⚠️ **Note:** If using Supabase features, make sure to configure your `.env` variables accordingly.
 
 ## 📌 Upcoming Roadmap
@@ -90,5 +90,3 @@ If this project helps you stay productive, please support it by giving a ⭐ on 
 Your support helps the project grow!
 
 > **Stay focused. Work smarter. Own your time.**
-
-
