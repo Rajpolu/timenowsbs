@@ -116,7 +116,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2" role="banner">
-            <div className="text-primary font-semibold text-xl">⏱ </div>
+            <div className="text-primary font-semibold text-xl">{""} </div>
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold hidden sm:inline">timenow.sbs</span>
               <span className="relative inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold text-black overflow-hidden bg-yellow-400">
