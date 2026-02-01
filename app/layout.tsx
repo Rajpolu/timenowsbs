@@ -25,12 +25,23 @@ export const metadata: Metadata = {
     title: "timenow.sbs - Master Your Time",
     description: "All the time tools you need to stay productive, organized, and on schedule.",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 512,
+        height: 512,
+      },
+    ],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo.png",
   },
   robots: {
     index: true,
     follow: true,
   },
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export const viewport: Viewport = {
