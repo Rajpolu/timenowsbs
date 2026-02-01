@@ -29,7 +29,11 @@ export function LayoutWithNav({ children }: { children: ReactNode }) {
               href="/"
               className="flex items-center gap-3 font-black text-xl text-white group italic tracking-tighter"
             >
-              <span className="drop-shadow-[0_0_10px_rgba(244,196,48,0.5)] text-4xl">⏱</span>
+              <img 
+                src="/logo.png" 
+                alt="timenow.sbs logo" 
+                className="w-10 h-10 drop-shadow-[0_0_10px_rgba(244,196,48,0.5)]" 
+              />
               <div className="flex items-center gap-2">
                 <span className="hidden xs:inline uppercase tracking-tighter">timenow.sbs</span>
                 <span className="relative inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black bg-[#F4C430] text-black overflow-hidden ring-2 ring-[#F4C430]/20">
