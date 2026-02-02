@@ -34,8 +34,39 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/logo.png",
+    icon: [
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+      {
+        url: "/favicon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      {
+        url: "/favicon-256x256.png",
+        sizes: "256x256",
+        type: "image/png",
+      },
+      {
+        url: "/favicon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/favicon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      {
+        url: "/logo.png",
+        sizes: "any",
+      },
+    ],
+    shortcut: "/favicon.ico",
   },
   robots: {
     index: true,
