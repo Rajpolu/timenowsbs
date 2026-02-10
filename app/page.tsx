@@ -169,7 +169,7 @@ export default function Home() {
               className="w-9 h-9" 
             />
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white/90">timenow.sbs</span>
+              <span className="font-bold text-white/90 text-xl">Timenow.sbs</span>
               <span className="relative inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold text-black/90 overflow-hidden bg-[#F4C430]">
                 BETA
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
