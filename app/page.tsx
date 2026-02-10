@@ -19,13 +19,10 @@ import {
   ShieldCheck,
   Github,
   Check,
-  Moon,
-  Sun,
   Menu,
   X,
 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useTheme } from "next-themes"
 import { AuthModal } from "@/components/auth-modal"
 import { FeedbackButton } from "@/components/feedback-button"
 import { PaymentButton } from "@/components/payment-button"
@@ -134,7 +131,6 @@ export default function Home() {
   const [activePlan, setActivePlan] = useState<"standard" | "premium">("standard")
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
   const [timeLeft, setTimeLeft] = useState(0)
 
   useEffect(() => {
@@ -200,12 +196,14 @@ export default function Home() {
             >
               Blog
             </Link>
-            <Link 
-              href="/changelog" 
+            <a 
+              href="https://github.com/Rajpolu/timenowsbs/commits/Completed" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
             >
               Changelog
-            </Link>
+            </a>
           </nav>
 
           {/* Right side actions */}
@@ -222,20 +220,7 @@ export default function Home() {
               <span className="hidden md:inline">Star</span>
             </a>
 
-            {/* Theme Toggle */}
-            {mounted && (
-              <button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
-            )}
+
 
             {/* Hamburger Menu - Mobile/Tablet */}
             <button
@@ -277,13 +262,15 @@ export default function Home() {
               >
                 Blog
               </Link>
-              <Link
-                href="/changelog"
+              <a
+                href="https://github.com/Rajpolu/timenowsbs/commits/Completed"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block px-4 py-3 text-sm font-medium text-white/70 hover:text-[#F4C430] hover:bg-white/5 rounded-lg transition"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Changelog
-              </Link>
+              </a>
             </nav>
           </div>
         )}
