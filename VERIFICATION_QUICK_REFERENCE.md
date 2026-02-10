@@ -3,7 +3,7 @@
 ## One-Page Verification Summary
 
 ### ✅ Favicon Verification (5 minutes)
-```
+\`\`\`
 1. Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
 2. Check browser tab - should show gold clock icon
 3. Verify in Chrome DevTools:
@@ -15,7 +15,7 @@
 5. Check cache is not causing issues:
    - DevTools → Application → Clear Storage
    - Refresh page
-```
+\`\`\`
 
 **Expected Result**: Gold (#F4C430) rounded square with black clock showing 3 o'clock
 
@@ -24,7 +24,7 @@
 ### ✅ Widget Verification (10 minutes)
 
 #### Desktop (> 768px)
-```
+\`\`\`
 1. Navigate to https://timenow.sbs/widget
 2. Should see sidebar layout on left with main widget area
 3. Test dragging: Click and drag widget title bar around screen
@@ -32,12 +32,12 @@
 5. Tools tab: Toggle Timer/Stopwatch/Planner/Timezone on/off
 6. Appearance tab: Switch between light/dark/auto themes
 7. Refresh page - verify settings persist
-```
+\`\`\`
 
 **Expected**: Draggable sidebar widget, settings saved to localStorage
 
 #### Mobile (< 768px)
-```
+\`\`\`
 1. Navigate to https://timenow.sbs/widget on phone
 2. Should see fullscreen widget view (no sidebar)
 3. Tap tabs at bottom to switch between tools
@@ -46,7 +46,7 @@
 6. Add to home screen:
    - iOS: Share → Add to Home Screen
    - Android: Chrome menu → Install App
-```
+\`\`\`
 
 **Expected**: Fullscreen touch-friendly interface, responsive orientation
 
@@ -55,7 +55,7 @@
 ### ✅ Blog Verification (10 minutes)
 
 #### Accessibility
-```
+\`\`\`
 1. Navigate to https://timenow.sbs/blog
 2. Page should load without errors (check console)
 3. Should see 2+ sample blog posts in grid
@@ -63,10 +63,10 @@
 5. Feature images load (no 404s)
 6. Click on a post to view full article
 7. Navigation works: Back button returns to blog list
-```
+\`\`\`
 
 #### Features
-```
+\`\`\`
 1. Social Sharing: Click Share button on article
    - Twitter ✓ Shares with article title
    - LinkedIn ✓ Includes excerpt
@@ -79,10 +79,10 @@
 3. Comments: Scroll to bottom
    - Comment form should be visible
    - Should be able to type and submit (if DB configured)
-```
+\`\`\`
 
 #### Responsive Design
-```
+\`\`\`
 Mobile (< 640px):
 - [ ] Single column layout
 - [ ] Text readable (font size ≥ 16px)
@@ -96,14 +96,14 @@ Tablet (640-1024px):
 Desktop (> 1024px):
 - [ ] Three column layout
 - [ ] Proper whitespace and max-width
-```
+\`\`\`
 
 ---
 
 ## Troubleshooting Flowchart
 
 ### Favicon Not Showing?
-```
+\`\`\`
 ↓ Is it showing in another browser? YES → Browser cache issue
                                    NO → Check next step
 ↓ Do files exist? (public/favicon-*.png, favicon.ico)
@@ -113,10 +113,10 @@ Desktop (> 1024px):
                                    NO → Fix metadata
                                    YES → Hard refresh (Ctrl+Shift+R)
 ↓ Still not working? → Clear entire browser cache/cookies
-```
+\`\`\`
 
 ### Widget Not Loading?
-```
+\`\`\`
 ↓ Does page load without errors? (Check browser console)
                                    NO → Fix JavaScript errors
                                    YES → Check next step
@@ -129,10 +129,10 @@ Desktop (> 1024px):
                                    YES → Try resetting config:
                                          localStorage.removeItem('widget-config')
                                          Refresh page
-```
+\`\`\`
 
 ### Blog Page Missing?
-```
+\`\`\`
 ↓ Does /blog URL load or show 404?
                                    SHOWS 404 → Check if app/blog/page.tsx exists
                                    LOADS → Continue to check content
@@ -145,14 +145,14 @@ Desktop (> 1024px):
 ↓ Is content responsive?
                                    NO → Test at different breakpoints (DevTools)
                                    YES → Blog page working correctly
-```
+\`\`\`
 
 ---
 
 ## Testing Commands
 
 ### Clear Browser Cache
-```bash
+\`\`\`bash
 # All browsers cache favicon aggressively
 # Use one of these:
 
@@ -164,10 +164,10 @@ macOS: Cmd + Shift + R
 1. F12 to open DevTools
 2. Application → Storage → Clear Site Data
 3. Refresh page
-```
+\`\`\`
 
 ### Test Responsive Design
-```bash
+\`\`\`bash
 # Open browser DevTools
 F12 or Right-click → Inspect
 
@@ -179,10 +179,10 @@ Cmd + Shift + M (macOS)
 # Mobile: 360px, 390px, 411px
 # Tablet: 640px, 768px, 1024px
 # Desktop: 1280px, 1440px, 1920px
-```
+\`\`\`
 
 ### Check Console Logs
-```javascript
+\`\`\`javascript
 // Favicon verification
 document.querySelectorAll('link[rel="icon"]')
 
@@ -194,7 +194,7 @@ console.log(window.innerWidth, window.innerHeight)
 
 // Check for errors
 // Look for red messages in console
-```
+\`\`\`
 
 ---
 

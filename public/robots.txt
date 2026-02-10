@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /settings/
+Disallow: /profile/
+Disallow: /billing/
+Disallow: /dashboard/
+Disallow: /premium-dashboard/
+
+Sitemap: https://timenow.sbs/sitemap.xml

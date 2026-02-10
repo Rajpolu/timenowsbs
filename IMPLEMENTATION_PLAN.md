@@ -52,7 +52,7 @@ All implementations emphasize responsive design, user experience consistency, an
 
 ### 1.3 Cache Clearing Instructions (Critical for Verification)
 
-```bash
+\`\`\`bash
 # Windows
 - Chrome: Ctrl + Shift + Delete → Clear browsing data → All time
 - Firefox: Ctrl + H → Manage History → Clear Recent History
@@ -67,7 +67,7 @@ All implementations emphasize responsive design, user experience consistency, an
 # Browser favicon cache can be stubborn. Use:
 - Hard refresh (Ctrl+Shift+R or Cmd+Shift+R)
 - Open DevTools → Application tab → Clear Storage
-```
+\`\`\`
 
 ### 1.4 Favicon Quality Verification
 
@@ -106,10 +106,10 @@ All implementations emphasize responsive design, user experience consistency, an
 ### 2.2 Widget Access & Installation Guide
 
 #### Method 1: Direct URL Access
-```
+\`\`\`
 Desktop:  https://timenow.sbs/widget
 Mobile:   https://timenow.sbs/widget
-```
+\`\`\`
 
 #### Method 2: Browser Extensions
 For users to add as a widget/bookmark:
@@ -169,11 +169,11 @@ For users to add as a widget/bookmark:
 
 ### 2.5 Widget Responsive Breakpoints
 
-```
+\`\`\`
 Mobile:      < 640px   (Single column, fullscreen)
 Tablet:      640-1024px (Two column, adjustable)
 Desktop:     > 1024px  (Sidebar + main, draggable)
-```
+\`\`\`
 
 ### 2.6 Performance Metrics
 
@@ -362,7 +362,7 @@ Desktop:     > 1024px  (Sidebar + main, draggable)
 
 ### 5.2 Console Debugging Steps
 
-```javascript
+\`\`\`javascript
 // Check favicon loading
 console.log("[v0] Document favicon:", document.querySelector('link[rel="icon"]'));
 
@@ -374,7 +374,7 @@ console.log("[v0] Window width:", window.innerWidth);
 
 // Check blog post data
 console.log("[v0] Blog posts loaded:", BLOG_POSTS.length);
-```
+\`\`\`
 
 ### 5.3 Network Tab Debugging
 

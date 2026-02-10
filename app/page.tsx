@@ -17,10 +17,16 @@ import {
   Facebook,
   LayoutDashboard,
   ShieldCheck,
+  Github,
+  Check,
+  Moon,
+  Sun,
 } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import { AuthModal } from "@/components/auth-modal"
 import { FeedbackButton } from "@/components/feedback-button"
+import { PaymentButton } from "@/components/payment-button"
 
 const tools = [
   {
@@ -73,23 +79,63 @@ const tools = [
   },
 ]
 
+const pricingPlans = {
+  free: {
+    name: "Free",
+    price: 0,
+    description: "Perfect to get started",
+    features: [
+      "Timezone converter",
+      "World clock",
+      "Basic timer",
+      "Stopwatch with laps",
+      "Pomodoro (basic)",
+      "Limited to 5 tasks/day",
+    ],
+  },
+  standard: {
+    name: "Standard",
+    monthlyPrice: 5.99,
+    annualPrice: 4.79,
+    description: "For focused professionals",
+    features: [
+      "Everything in Free +",
+      "Advanced Daily Planner",
+      "Unlimited tasks",
+      "Custom work intervals",
+      "Session analytics",
+      "Priority support",
+    ],
+  },
+  premium: {
+    name: "Premium",
+    monthlyPrice: 11.98,
+    annualPrice: 9.58,
+    description: "For elite performers",
+    features: [
+      "Everything in Standard +",
+      "Personal Stats Dashboard",
+      "Export session data (CSV/JSON)",
+      "API Access for developers",
+      "Ad-free experience",
+      "Early access to beta tools",
+    ],
+  },
+}
+
 export default function Home() {
-  const [timeLeft, setTimeLeft] = useState(336)
   const [mounted, setMounted] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isPremium, setIsPremium] = useState(false)
   const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [isAnnual, setIsAnnual] = useState(false)
+  const [activePlan, setActivePlan] = useState<"standard" | "premium">("standard")
+  const [timeLeft, setTimeLeft] = useState(336)
+  const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null)
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
-    const savedEmail = localStorage.getItem("userEmail")
-    if (savedEmail) {
-      setUserEmail(savedEmail)
-      const premiumUsers = localStorage.getItem("premiumUsers")
-      if (premiumUsers?.includes(savedEmail)) {
-        setIsPremium(true)
-      }
-    }
   }, [])
 
   useEffect(() => {
@@ -115,28 +161,78 @@ export default function Home() {
 
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2" role="banner">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition" role="banner">
             <img 
               src="/logo.png" 
               alt="timenow.sbs logo" 
-              className="w-10 h-10" 
+              className="w-9 h-9" 
             />
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold hidden sm:inline">timenow.sbs</span>
-              <span className="relative inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold text-black overflow-hidden bg-yellow-400">
+              <span className="text-sm font-bold text-white/90">timenow.sbs</span>
+              <span className="relative inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold text-black/90 overflow-hidden bg-[#F4C430]">
                 BETA
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
               </span>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/pricing"
-              className="px-4 py-2 rounded-lg bg-primary text-black font-bold hover:bg-[#E0B420] transition text-sm shadow-lg shadow-primary/20"
-              aria-label="Upgrade to Pro"
+          </Link>
+
+          {/* Navigation Links - Hidden on mobile, visible on desktop */}
+          <nav className="hidden md:flex items-center gap-8 flex-1 ml-12">
+            <Link 
+              href="#features" 
+              className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
             >
-              Upgrade
+              Features
             </Link>
+            <Link 
+              href="#pricing" 
+              className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
+            >
+              Pricing
+            </Link>
+            <Link 
+              href="/blog" 
+              className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
+            >
+              Blog
+            </Link>
+            <a 
+              href="https://github.com/rajpolu/timenow-sbs/releases" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
+            >
+              Changelog
+            </a>
+          </nav>
+
+          {/* Right side actions */}
+          <div className="flex items-center gap-4 ml-auto">
+            {/* GitHub Star Button */}
+            <a
+              href="https://github.com/rajpolu/timenow-sbs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#F4C430]/30 transition text-xs font-bold text-white/80 hover:text-[#F4C430]"
+              aria-label="Star on GitHub"
+            >
+              <Github className="w-4 h-4" />
+              <span className="hidden sm:inline">Star</span>
+            </a>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
       </header>
@@ -184,7 +280,7 @@ export default function Home() {
               </Link>
             ) : (
               <Link
-                href="/pricing"
+                href="#pricing"
                 className="px-10 py-4 bg-zinc-900 border border-white/10 text-white rounded-xl font-black text-lg hover:bg-zinc-800 transition flex items-center justify-center gap-3 group uppercase italic tracking-tighter"
               >
                 <ShieldCheck className="w-5 h-5 text-[#F4C430] group-hover:scale-110 transition" />
@@ -219,8 +315,8 @@ export default function Home() {
       </section>
 
       {/* Tools Grid */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-center">Advanced Tools</h2>
+      <section id="features" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-center">Features</h2>
         <p className="text-muted-foreground text-center mb-12 text-lg">
           6 powerful tools to maximize your productivity
         </p>
@@ -280,19 +376,185 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4">Pricing</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
+            Choose the perfect plan for your productivity needs. Upgrade or downgrade anytime.
+          </p>
+          
+          {/* Toggle Annual/Monthly */}
+          <div className="flex items-center justify-center gap-4">
+            <span className={`text-sm font-semibold transition ${!isAnnual ? "text-[#F4C430]" : "text-white/50"}`}>
+              Monthly
+            </span>
+            <button
+              onClick={() => setIsAnnual(!isAnnual)}
+              className="relative w-14 h-7 bg-white/10 border border-white/20 rounded-full transition-colors hover:bg-white/15"
+              aria-label="Toggle billing period"
+            >
+              <div
+                className={`absolute top-1 left-1 w-5 h-5 bg-[#F4C430] rounded-full transition-transform duration-300 ${
+                  isAnnual ? "translate-x-7" : ""
+                }`}
+              />
+            </button>
+            <div className="flex flex-col items-start">
+              <span className={`text-sm font-semibold transition ${isAnnual ? "text-[#F4C430]" : "text-white/50"}`}>
+                Annually
+              </span>
+              {isAnnual && (
+                <span className="text-xs text-[#F4C430] font-bold">Save 20%</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {/* Free Plan */}
+          <div className="bg-card border border-border rounded-2xl p-8 flex flex-col hover:border-primary/50 transition">
+            <h3 className="text-2xl font-bold mb-2">{pricingPlans.free.name}</h3>
+            <p className="text-muted-foreground text-sm mb-6">{pricingPlans.free.description}</p>
+            
+            <div className="mb-8">
+              <span className="text-4xl font-bold text-[#F4C430]">${pricingPlans.free.price}</span>
+              <p className="text-white/40 text-sm mt-2">Forever free</p>
+            </div>
+
+            <button
+              className="w-full py-3 bg-white/5 border border-white/10 rounded-lg font-semibold hover:bg-white/10 transition mb-8 text-white/80"
+              disabled
+            >
+              Current Plan
+            </button>
+
+            <div className="space-y-3 flex-grow">
+              {pricingPlans.free.features.map((feature, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-[#F4C430] flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/80">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Standard Plan */}
+          <div className="bg-card border-2 border-[#F4C430]/30 rounded-2xl p-8 flex flex-col relative hover:border-[#F4C430] transition shadow-lg shadow-[#F4C430]/10">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#F4C430] text-black text-xs font-bold px-3 py-1 rounded-full">
+              POPULAR
+            </div>
+            
+            <h3 className="text-2xl font-bold mb-2 text-[#F4C430]">{pricingPlans.standard.name}</h3>
+            <p className="text-muted-foreground text-sm mb-6">{pricingPlans.standard.description}</p>
+            
+            <div className="mb-8">
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-bold text-white">
+                  ${isAnnual ? pricingPlans.standard.annualPrice : pricingPlans.standard.monthlyPrice}
+                </span>
+                <span className="text-white/40 text-sm">/month</span>
+              </div>
+              <p className="text-white/40 text-sm mt-2">
+                {isAnnual ? `Billed $${(pricingPlans.standard.annualPrice * 12).toFixed(2)}/year` : "Billed monthly"}
+              </p>
+            </div>
+
+            <PaymentButton
+              price={isAnnual ? pricingPlans.standard.annualPrice : pricingPlans.standard.monthlyPrice}
+              plan={isAnnual ? "annual" : "monthly"}
+              planType="standard"
+              onSuccess={() => {
+                setNotification({ type: "success", message: "Successfully upgraded to Standard!" })
+                setTimeout(() => setNotification(null), 3000)
+              }}
+              onError={(e) => {
+                setNotification({ type: "error", message: e })
+                setTimeout(() => setNotification(null), 3000)
+              }}
+              className="w-full mb-8"
+            />
+
+            <div className="space-y-3 flex-grow">
+              {pricingPlans.standard.features.map((feature, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-[#F4C430] flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/80">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Premium Plan */}
+          <div className="bg-card border border-border rounded-2xl p-8 flex flex-col hover:border-primary/50 transition">
+            <h3 className="text-2xl font-bold mb-2">{pricingPlans.premium.name}</h3>
+            <p className="text-muted-foreground text-sm mb-6">{pricingPlans.premium.description}</p>
+            
+            <div className="mb-8">
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-bold text-white">
+                  ${isAnnual ? pricingPlans.premium.annualPrice : pricingPlans.premium.monthlyPrice}
+                </span>
+                <span className="text-white/40 text-sm">/month</span>
+              </div>
+              <p className="text-white/40 text-sm mt-2">
+                {isAnnual ? `Billed $${(pricingPlans.premium.annualPrice * 12).toFixed(2)}/year` : "Billed monthly"}
+              </p>
+            </div>
+
+            <PaymentButton
+              price={isAnnual ? pricingPlans.premium.annualPrice : pricingPlans.premium.monthlyPrice}
+              plan={isAnnual ? "annual" : "monthly"}
+              planType="premium"
+              onSuccess={() => {
+                setNotification({ type: "success", message: "Successfully upgraded to Premium!" })
+                setTimeout(() => setNotification(null), 3000)
+              }}
+              onError={(e) => {
+                setNotification({ type: "error", message: e })
+                setTimeout(() => setNotification(null), 3000)
+              }}
+              className="w-full mb-8"
+            />
+
+            <div className="space-y-3 flex-grow">
+              {pricingPlans.premium.features.map((feature, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-[#F4C430] flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-white/80">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Notification */}
+      {notification && (
+        <div
+          className={`fixed top-4 right-4 px-4 py-3 rounded-lg z-50 ${
+            notification.type === "success" ? "bg-green-500/90 text-white" : "bg-red-500/90 text-white"
+          }`}
+          role="alert"
+        >
+          {notification.message}
+        </div>
+      )}
+
       {/* CTA Section */}
       <section className="bg-gradient-to-r from-primary/15 to-accent/15 border-t border-b border-primary/20 mx-4 sm:mx-6 lg:mx-8 my-12 sm:my-20 rounded-2xl">
         <div className="py-12 sm:py-16 px-6 sm:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Master Your Time?</h2>
           <p className="text-muted-foreground mb-8 text-balance max-w-2xl mx-auto text-lg">
-            Get started instantly with no sign up required. Upgrade anytime to unlock all premium features.
+            Get started instantly with our free plan. Upgrade anytime to unlock premium features with 20% off annual plans.
           </p>
           <Link
-            href="/pricing"
+            href="#pricing"
             className="inline-block px-8 py-3 bg-[#F4C430] text-black rounded-lg font-semibold hover:bg-[#E0B420] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4C430]"
-            aria-label="Upgrade now with 20% discount"
+            aria-label="View pricing plans"
           >
-            Upgrade Now - 20% Off
+            View Pricing Plans
           </Link>
         </div>
       </section>
