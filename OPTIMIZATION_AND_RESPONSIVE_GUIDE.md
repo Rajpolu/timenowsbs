@@ -53,9 +53,9 @@ This document outlines the performance optimizations and responsive design impro
 
 **Recommendations:**
 - Set proper cache-control headers:
-  ```
+  \`\`\`
   public, s-maxage=31536000, max-age=86400
-  ```
+  \`\`\`
 - Implement versioned static assets
 - Use Vercel's Edge Caching for optimal performance
 
@@ -77,12 +77,12 @@ This document outlines the performance optimizations and responsive design impro
 ### 1. Viewport Configuration
 
 **Configured in layout.tsx:**
-```typescript
+\`\`\`typescript
 width: "device-width"
 initialScale: 1
 maximumScale: 5
 userScalable: true
-```
+\`\`\`
 
 **Benefits:**
 - Ensures proper rendering on mobile devices
@@ -108,37 +108,37 @@ userScalable: true
 - Responsive logo sizing
 - Touch-friendly button sizes (min 44x44px)
 
-```html
+\`\`\`html
 <!-- Navigation visible only on desktop -->
 <nav className="hidden md:flex ...">
   <!-- Navigation links -->
 </nav>
-```
+\`\`\`
 
 ### 4. Flexible Layouts
 
 **Flexbox for Alignment:**
-```tsx
+\`\`\`tsx
 <div className="flex items-center justify-between gap-4">
   {/* Responsive layout that wraps on smaller screens */}
 </div>
-```
+\`\`\`
 
 **Grid for Complex Layouts:**
-```tsx
+\`\`\`tsx
 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
   {/* Automatically adjusts columns based on screen size */}
 </div>
-```
+\`\`\`
 
 ### 5. Typography Scaling
 
 **Responsive Font Sizes:**
-```tsx
+\`\`\`tsx
 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
   Title
 </h1>
-```
+\`\`\`
 
 **Benefits:**
 - Readable on all devices
@@ -148,11 +148,11 @@ userScalable: true
 ### 6. Spacing and Padding
 
 **Responsive Spacing:**
-```tsx
+\`\`\`tsx
 <section className="px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-24">
   {/* Adapts padding based on screen size */}
 </section>
-```
+\`\`\`
 
 **Guidelines:**
 - Mobile: 16px (px-4) horizontal padding
@@ -171,9 +171,9 @@ userScalable: true
 - Critical CSS inlining
 - Preload important resources
 
-```html
+\`\`\`html
 <link rel="preload" as="image" href="/logo.png">
-```
+\`\`\`
 
 ### 2. First Input Delay (FID) / Interaction to Next Paint (INP)
 
@@ -193,11 +193,11 @@ userScalable: true
 - No dynamic content injection
 - Stable fonts and sizes
 
-```tsx
+\`\`\`tsx
 <div className="w-10 h-10">
   <img src="/logo.png" alt="Logo" />
 </div>
-```
+\`\`\`
 
 ## Mobile-Specific Optimizations
 
@@ -225,13 +225,13 @@ userScalable: true
 ### 4. Mobile Menu Implementation
 
 **Responsive Navigation Pattern:**
-```tsx
+\`\`\`tsx
 // Mobile: off-canvas or dropdown menu
 // Desktop: horizontal navigation bar
 <nav className="hidden md:flex ...">
   {/* Desktop nav */}
 </nav>
-```
+\`\`\`
 
 ## Testing Checklist
 
@@ -349,25 +349,25 @@ userScalable: true
 ### Vercel Deployment
 
 1. **Enable Image Optimization**
-   ```
+   \`\`\`
    Next.js Image Optimization: ON
-   ```
+   \`\`\`
 
 2. **Configure Caching Headers**
-   ```
+   \`\`\`
    vercel.json with proper cache-control rules
-   ```
+   \`\`\`
 
 3. **Set Production Environment**
-   ```
+   \`\`\`
    NODE_ENV: production
    NEXTAUTH_URL: https://timenow.sbs
-   ```
+   \`\`\`
 
 4. **Enable Security Headers**
-   ```
+   \`\`\`
    HSTS, CSP, X-Frame-Options configured
-   ```
+   \`\`\`
 
 ## Conclusion
 

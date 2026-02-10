@@ -169,7 +169,7 @@ export default function Home() {
               className="w-9 h-9" 
             />
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white/90">timenow.sbs</span>
+              <span className="font-bold text-white/90 text-xl">Timenow.sbs</span>
               <span className="relative inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold text-black/90 overflow-hidden bg-[#F4C430]">
                 BETA
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
@@ -222,17 +222,19 @@ export default function Home() {
             </a>
 
             {/* Theme Toggle */}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -664,6 +666,26 @@ export default function Home() {
                       className="text-muted-foreground hover:text-foreground transition"
                     >
                       Contact Us
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold mb-4">Resources</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <Link href="/blog" className="text-muted-foreground hover:text-foreground transition">
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/changelog" className="text-muted-foreground hover:text-foreground transition">
+                      Changelog
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="/sitemap.xml" className="text-muted-foreground hover:text-foreground transition">
+                      Sitemap
                     </a>
                   </li>
                 </ul>
