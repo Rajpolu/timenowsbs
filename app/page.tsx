@@ -364,10 +364,10 @@ export default function Home() {
             const Icon = tool.icon
             return (
               <Link key={tool.id} href={tool.free ? tool.href : "/pricing"} role="listitem">
-                <div className="group p-6 sm:p-7 bg-gradient-to-br from-card to-card/50 rounded-xl border border-border hover:border-primary hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
+                <div className="group p-6 sm:p-7 bg-gradient-to-br from-card to-card/50 rounded-xl border border-white/20 hover:border-white/40 hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
                   <div className="flex items-start justify-between mb-4">
-                    <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition">
-                      <Icon className="w-6 h-6 text-primary" aria-hidden="true" />
+                    <div className="p-3 bg-white/10 rounded-lg group-hover:bg-white/20 transition">
+                      <Icon className="w-6 h-6 text-white" aria-hidden="true" />
                     </div>
                     {!tool.free && (
                       <span className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full font-semibold">
@@ -375,7 +375,7 @@ export default function Home() {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-white transition">
                     {tool.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">{tool.description}</p>
@@ -401,10 +401,10 @@ export default function Home() {
             return (
               <div
                 key={i}
-                className="flex gap-4 p-6 bg-card rounded-xl border border-border hover:border-primary transition"
+                className="flex gap-4 p-6 bg-card rounded-xl border border-white/20 hover:border-white/40 transition"
                 role="listitem"
               >
-                <Icon className="w-8 h-8 text-primary flex-shrink-0 mt-1" aria-hidden="true" />
+                <Icon className="w-8 h-8 text-white flex-shrink-0 mt-1" aria-hidden="true" />
                 <div>
                   <h3 className="font-bold text-lg mb-1">{feature.title}</h3>
                   <p className="text-sm text-muted-foreground">{feature.desc}</p>
