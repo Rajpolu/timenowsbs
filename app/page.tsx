@@ -222,17 +222,19 @@ export default function Home() {
             </a>
 
             {/* Theme Toggle */}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -664,6 +666,26 @@ export default function Home() {
                       className="text-muted-foreground hover:text-foreground transition"
                     >
                       Contact Us
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold mb-4">Resources</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <Link href="/blog" className="text-muted-foreground hover:text-foreground transition">
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/changelog" className="text-muted-foreground hover:text-foreground transition">
+                      Changelog
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="/sitemap.xml" className="text-muted-foreground hover:text-foreground transition">
+                      Sitemap
                     </a>
                   </li>
                 </ul>
