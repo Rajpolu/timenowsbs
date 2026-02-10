@@ -124,26 +124,18 @@ const pricingPlans = {
 }
 
 export default function Home() {
-  const [timeLeft, setTimeLeft] = useState(336)
   const [mounted, setMounted] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [isPremium, setIsPremium] = useState(false)
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [isAnnual, setIsAnnual] = useState(false)
   const [activePlan, setActivePlan] = useState<"standard" | "premium">("standard")
+  const [timeLeft, setTimeLeft] = useState(336)
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null)
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
-    const savedEmail = localStorage.getItem("userEmail")
-    if (savedEmail) {
-      setUserEmail(savedEmail)
-      const premiumUsers = localStorage.getItem("premiumUsers")
-      if (premiumUsers?.includes(savedEmail)) {
-        setIsPremium(true)
-      }
-    }
   }, [])
 
   useEffect(() => {
@@ -170,20 +162,20 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2" role="banner">
+          <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition" role="banner">
             <img 
               src="/logo.png" 
               alt="timenow.sbs logo" 
-              className="w-10 h-10" 
+              className="w-9 h-9" 
             />
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold hidden sm:inline">timenow.sbs</span>
-              <span className="relative inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold text-black overflow-hidden bg-yellow-400">
+              <span className="text-sm font-bold text-white/90">timenow.sbs</span>
+              <span className="relative inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold text-black/90 overflow-hidden bg-[#F4C430]">
                 BETA
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Navigation Links - Hidden on mobile, visible on desktop */}
           <nav className="hidden md:flex items-center gap-8 flex-1 ml-12">
@@ -288,7 +280,7 @@ export default function Home() {
               </Link>
             ) : (
               <Link
-                href="/pricing"
+                href="#pricing"
                 className="px-10 py-4 bg-zinc-900 border border-white/10 text-white rounded-xl font-black text-lg hover:bg-zinc-800 transition flex items-center justify-center gap-3 group uppercase italic tracking-tighter"
               >
                 <ShieldCheck className="w-5 h-5 text-[#F4C430] group-hover:scale-110 transition" />
@@ -323,8 +315,8 @@ export default function Home() {
       </section>
 
       {/* Tools Grid */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-center">Advanced Tools</h2>
+      <section id="features" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-center">Features</h2>
         <p className="text-muted-foreground text-center mb-12 text-lg">
           6 powerful tools to maximize your productivity
         </p>
@@ -387,7 +379,7 @@ export default function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4">Pricing</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
             Choose the perfect plan for your productivity needs. Upgrade or downgrade anytime.
           </p>
