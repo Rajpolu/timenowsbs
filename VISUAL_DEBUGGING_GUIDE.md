@@ -3,55 +3,55 @@
 ## Favicon Expected Appearance
 
 ### Browser Tab (16x16px - Smallest Display)
-```
+\`\`\`
 Expected: Gold (#F4C430) square, black clock barely visible
           but recognizable as time-related icon
 Current: Should match your brand logo in miniature form
-```
+\`\`\`
 
 ### Browser Bookmarks Bar (16-20px)
-```
+\`\`\`
 Expected: Gold square with clear black clock outline
           Clearly identifiable as time/productivity tool
 Visual: Small but pixel-perfect, no anti-aliasing blur
-```
+\`\`\`
 
 ### iOS Home Screen (180x180px)
-```
+\`\`\`
 Expected: Crisp gold (#F4C430) rounded square
           Black clock centered with 3 o'clock hand position
           No gloss/shine (iOS handles that)
           Perfect circle outline
 Visual: Looks like professional app icon
 Touch: Slight bounce animation when pressed
-```
+\`\`\`
 
 ### Android App Drawer (192x192px)
-```
+\`\`\`
 Expected: Same gold and black clock
           Rounded square corners
           Sharp edges, no transparency issues
 Visual: Consistent with Material Design guidelines
 Label: "timenow.sbs" appears below icon
-```
+\`\`\`
 
 ### Windows Taskbar (32-48px)
-```
+\`\`\`
 Expected: Gold background with black clock
           Clear at small size
           No pixelation or blur
 Visual: Looks like other pinned apps on taskbar
 Hover: Shows full app name "timenow.sbs"
-```
+\`\`\`
 
 ### macOS Dock (128px)
-```
+\`\`\`
 Expected: Large high-resolution gold clock
           Perfect for Retina displays
           3D reflection if enabled
 Visual: Looks premium and app-like
 Click: Bounces with fade-in animation
-```
+\`\`\`
 
 ---
 
@@ -59,7 +59,7 @@ Click: Bounces with fade-in animation
 
 ### Desktop Layout (> 768px width)
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────────────┐
 │ timenow.sbs    ⊕ + ≡    [Dark/Light Toggle]         [× / _ / □] │
 ├────────────────┬───────────────────────────────────────────────┤
@@ -85,7 +85,7 @@ Click: Bounces with fade-in animation
 │  [Import Data] │                                                 │
 │                │                                                 │
 └────────────────┴───────────────────────────────────────────────┘
-```
+\`\`\`
 
 **Desktop Interactions**:
 - [ ] Drag title bar to move widget anywhere
@@ -96,7 +96,7 @@ Click: Bounces with fade-in animation
 
 ### Mobile Layout (< 768px width)
 
-```
+\`\`\`
 ┌─────────────────────────────────┐
 │ timenow Widget         ⚙ ✕      │
 ├─────────────────────────────────┤
@@ -118,7 +118,7 @@ Click: Bounces with fade-in animation
 │  └─────────────────────────────┘│
 │                                  │
 └─────────────────────────────────┘
-```
+\`\`\`
 
 **Mobile Interactions**:
 - [ ] Widget takes up full screen
@@ -135,7 +135,7 @@ Click: Bounces with fade-in animation
 
 ### Desktop View (> 1024px)
 
-```
+\`\`\`
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │  timenow.sbs  [Home] [Tools] [Blog] [Widget] [Pricing]  [Sign In]           │
 ├──────────────────────────────────────────────────────────────────────────────┤
@@ -171,11 +171,11 @@ Click: Bounces with fade-in animation
 │                          │ │ [Add Comment] [Your Name]       │ │                │
 │                          │ └──────────────────────────────┘ │                │
 └──────────────────────────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ### Tablet View (640-1024px)
 
-```
+\`\`\`
 ┌────────────────────────────────────────────────────────────┐
 │  timenow.sbs  [Home] [Blog] [Widget]    [Sign In]         │
 ├────────────────────────────────────────────────────────────┤
@@ -202,11 +202,11 @@ Click: Bounces with fade-in animation
 │                           │ [Subscribe]         │           │
 │                           │                      │           │
 └────────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ### Mobile View (< 640px)
 
-```
+\`\`\`
 ┌──────────────────────────────┐
 │ timenow.sbs  ☰               │
 ├──────────────────────────────┤
@@ -249,29 +249,29 @@ Click: Bounces with fade-in animation
 │ [Productivity] [Collaboration] │
 │                                │
 └──────────────────────────────┘
-```
+\`\`\`
 
 ---
 
 ## Color Consistency Check
 
 ### Light Theme
-```
+\`\`\`
 Background: #ffffff (White)
 Text: #1a1a1a (Dark Gray/Black)
 Accent: #F4C430 (Gold - Brand Color)
 Border: #e0e0e0 (Light Gray)
 Hover: #f0f0f0 (Lighter Gray)
-```
+\`\`\`
 
 ### Dark Theme
-```
+\`\`\`
 Background: #1a1a1a (Dark Gray)
 Text: #ffffff (White)
 Accent: #F4C430 (Gold - Brand Color, stays same)
 Border: #404040 (Dark border)
 Hover: #2a2a2a (Slightly lighter)
-```
+\`\`\`
 
 **Contrast Check**:
 - [ ] Text on background: Ratio ≥ 7:1 (WCAG AAA)
@@ -283,7 +283,7 @@ Hover: #2a2a2a (Slightly lighter)
 ## Responsive Breakpoint Testing
 
 ### At 640px (Tablet to Mobile)
-```
+\`\`\`
 EXPECTED CHANGES:
 - [ ] Blog grid: 2 columns → 1 column
 - [ ] Sidebar: Visible → Hidden or below
@@ -292,32 +292,32 @@ EXPECTED CHANGES:
 - [ ] Font sizes: Slightly reduced but still readable
 - [ ] Spacing: Reduced padding/margins
 - [ ] Images: Full width of container
-```
+\`\`\`
 
 ### At 768px (Tablet)
-```
+\`\`\`
 EXPECTED CHANGES:
 - [ ] Widget: Sidebar visible for first time
 - [ ] Blog: Can display 2 columns comfortably
 - [ ] Navigation: May show condensed menu
 - [ ] Spacing: More generous than mobile
-```
+\`\`\`
 
 ### At 1024px (Tablet to Desktop)
-```
+\`\`\`
 EXPECTED CHANGES:
 - [ ] Blog: 3 columns (posts + sidebar + more content)
 - [ ] Widget: Fully draggable desktop experience
 - [ ] Navigation: Full horizontal menu
 - [ ] Spacing: Proper whitespace
-```
+\`\`\`
 
 ---
 
 ## Performance Waterfall Visualization
 
 ### Good Load Performance
-```
+\`\`\`
 Timeline (milliseconds):
 0ms:      Page load starts
 200ms:    [████] HTML downloads
@@ -328,10 +328,10 @@ Timeline (milliseconds):
 1200ms:   [████] Images load
 2000ms:   ✓ Largest Contentful Paint (LCP) - GOOD < 2.5s
 2500ms:   All content interactive
-```
+\`\`\`
 
 ### Poor Load Performance (🚫 Don't want this)
-```
+\`\`\`
 Timeline (milliseconds):
 0ms:      Page load starts
 1000ms:   [████████████] Large JavaScript bundle
@@ -340,14 +340,14 @@ Timeline (milliseconds):
 4000ms:   ✗ Largest Contentful Paint (LCP) - BAD > 4s
 5000ms:   Images still loading
 6000ms:   JavaScript execution blocking
-```
+\`\`\`
 
 ---
 
 ## Interactive Feature Test Cards
 
 ### Social Sharing Test
-```
+\`\`\`
 ACTION: Click "Twitter" button
 EXPECTED:
   1. New tab opens with pre-filled tweet
@@ -360,10 +360,10 @@ EXPECTED:
   1. Button text changes to "Copied!"
   2. URL copied to clipboard
   3. Text reverts after 2 seconds
-```
+\`\`\`
 
 ### Helpful Indicator Test
-```
+\`\`\`
 ACTION: Click "👍 Helpful" button
 EXPECTED:
   1. Button changes color (green/highlight)
@@ -376,10 +376,10 @@ EXPECTED:
   1. Button changes color (red/highlight)
   2. Vote stored in database
   3. 👍 button becomes inactive
-```
+\`\`\`
 
 ### Comment Test
-```
+\`\`\`
 ACTION: Scroll to comments section
 EXPECTED:
   1. Comment form visible
@@ -394,14 +394,14 @@ EXPECTED:
   3. Shows timestamp (just now)
   4. Form clears for next comment
   5. Comment count increases
-```
+\`\`\`
 
 ---
 
 ## Accessibility Visual Checks
 
 ### Keyboard Navigation
-```
+\`\`\`
 TAB through page, should hit in this order:
 1. Skip to main content link (top)
 2. Navigation menu items
@@ -414,10 +414,10 @@ TAB through page, should hit in this order:
 ✓ All interactive elements focusable
 ✓ Focus indicator clearly visible (outline or color)
 ✓ No elements keyboard-trapped
-```
+\`\`\`
 
 ### Screen Reader Testing
-```
+\`\`\`
 Navigate page with screen reader (NVDA/JAWS/VoiceOver):
 
 ✓ Page title announced
@@ -427,10 +427,10 @@ Navigate page with screen reader (NVDA/JAWS/VoiceOver):
 ✓ Form labels associated with inputs
 ✓ Buttons have clear names
 ✓ Skippable navigation present
-```
+\`\`\`
 
 ### Color Blind Testing
-```
+\`\`\`
 Simulate color blindness (DevTools):
 Chrome DevTools → Rendering → Emulate CSS media feature: prefers-color-scheme
 
@@ -442,7 +442,7 @@ Chrome DevTools → Rendering → Emulate CSS media feature: prefers-color-schem
 ✓ Content understandable without color
 ✓ Accent color still visible
 ✓ Buttons distinguishable by more than color
-```
+\`\`\`
 
 ---
 
