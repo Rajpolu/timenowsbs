@@ -21,6 +21,8 @@ import {
   Check,
   Moon,
   Sun,
+  Menu,
+  X,
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
@@ -130,9 +132,10 @@ export default function Home() {
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [isAnnual, setIsAnnual] = useState(false)
   const [activePlan, setActivePlan] = useState<"standard" | "premium">("standard")
-  const [timeLeft, setTimeLeft] = useState(336)
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
+  const [timeLeft, setTimeLeft] = useState(0)
 
   useEffect(() => {
     setMounted(true)
@@ -169,7 +172,7 @@ export default function Home() {
               className="w-9 h-9" 
             />
             <div className="flex items-center gap-2">
-              <span className="font-bold text-white/90 text-xl">Timenow.sbs</span>
+              <span className="text-sm font-bold text-white/90">timenow.sbs</span>
               <span className="relative inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold text-black/90 overflow-hidden bg-[#F4C430]">
                 BETA
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></span>
@@ -177,8 +180,8 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Navigation Links - Hidden on mobile, visible on desktop */}
-          <nav className="hidden md:flex items-center gap-8 flex-1 ml-12">
+          {/* Navigation Links - Hidden on mobile/tablet, visible on desktop */}
+          <nav className="hidden lg:flex items-center gap-8 flex-1 ml-12">
             <Link 
               href="#features" 
               className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
@@ -197,18 +200,16 @@ export default function Home() {
             >
               Blog
             </Link>
-            <a 
-              href="https://github.com/rajpolu/timenow-sbs/releases" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <Link 
+              href="/changelog" 
               className="text-sm font-medium text-white/70 hover:text-[#F4C430] transition"
             >
               Changelog
-            </a>
+            </Link>
           </nav>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="flex items-center gap-3 ml-auto">
             {/* GitHub Star Button */}
             <a
               href="https://github.com/rajpolu/timenow-sbs"
@@ -218,7 +219,7 @@ export default function Home() {
               aria-label="Star on GitHub"
             >
               <Github className="w-4 h-4" />
-              <span className="hidden sm:inline">Star</span>
+              <span className="hidden md:inline">Star</span>
             </a>
 
             {/* Theme Toggle */}
@@ -235,8 +236,57 @@ export default function Home() {
                 )}
               </button>
             )}
+
+            {/* Hamburger Menu - Mobile/Tablet */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition text-white/70 hover:text-[#F4C430]"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile/Tablet Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-background border-b border-border">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-2">
+              <Link
+                href="#features"
+                className="block px-4 py-3 text-sm font-medium text-white/70 hover:text-[#F4C430] hover:bg-white/5 rounded-lg transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Features
+              </Link>
+              <Link
+                href="#pricing"
+                className="block px-4 py-3 text-sm font-medium text-white/70 hover:text-[#F4C430] hover:bg-white/5 rounded-lg transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Pricing
+              </Link>
+              <Link
+                href="/blog"
+                className="block px-4 py-3 text-sm font-medium text-white/70 hover:text-[#F4C430] hover:bg-white/5 rounded-lg transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
+              </Link>
+              <Link
+                href="/changelog"
+                className="block px-4 py-3 text-sm font-medium text-white/70 hover:text-[#F4C430] hover:bg-white/5 rounded-lg transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Changelog
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       <div className="flex justify-center py-4 px-4">

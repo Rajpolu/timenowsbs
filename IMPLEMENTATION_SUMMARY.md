@@ -83,13 +83,13 @@
 ## 🔧 Technical Details
 
 ### Favicon Configuration (layout.tsx)
-```
+\`\`\`
 - 16x16px: Browser tabs and bookmarks
 - 32x32px: Browser tabs (higher resolution)
 - 192x192px: Android devices and PWA
 - 512x512px: High-resolution displays and PWA
 - Apple Touch Icon: iOS home screen shortcuts
-```
+\`\`\`
 
 ### Blog Article Structure
 Each article includes:
