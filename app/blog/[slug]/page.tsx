@@ -287,13 +287,31 @@ export default function BlogArticle({ params }: { params: { slug: string } }) {
           </Link>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({
-                    title: article.title,
-                    text: article.excerpt,
-                    url: window.location.href,
-                  })
+              onClick={async () => {
+                try {
+                  if (navigator.share) {
+                    await navigator.share({
+                      title: article.title,
+                      text: article.excerpt,
+                      url: window.location.href,
+                    })
+                  } else {
+                    // Fallback: Copy to clipboard
+                    const text = `${article.title}\n${window.location.href}`
+                    await navigator.clipboard.writeText(text)
+                    alert('Article link copied to clipboard!')
+                  }
+                } catch (error) {
+                  // User cancelled share or permission denied - fallback to clipboard
+                  if (error instanceof Error && error.name !== 'AbortError') {
+                    try {
+                      const text = `${article.title}\n${window.location.href}`
+                      await navigator.clipboard.writeText(text)
+                      alert('Article link copied to clipboard!')
+                    } catch {
+                      alert('Unable to share. Please copy the URL manually.')
+                    }
+                  }
                 }
               }}
               className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition"
