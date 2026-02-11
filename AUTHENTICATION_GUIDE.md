@@ -81,7 +81,7 @@ All tables use Row Level Security (RLS) to ensure users only access their own da
 
 ### Getting Current User (Server)
 
-```tsx
+\`\`\`tsx
 import { getCurrentUser } from "@/app/actions/auth"
 
 export default async function Page() {
@@ -93,11 +93,11 @@ export default async function Page() {
   
   return <div>Welcome, {user.email}</div>
 }
-```
+\`\`\`
 
 ### Using Session Context (Client)
 
-```tsx
+\`\`\`tsx
 "use client"
 
 import { useSession } from "@/components/session-provider"
@@ -115,11 +115,11 @@ export function UserMenu() {
     </div>
   )
 }
-```
+\`\`\`
 
 ### Getting User Profile (Server)
 
-```tsx
+\`\`\`tsx
 import { getUserProfile } from "@/app/actions/auth"
 
 export default async function Page() {
@@ -127,11 +127,11 @@ export default async function Page() {
   
   return <div>{profile?.email}</div>
 }
-```
+\`\`\`
 
 ### Signing Out (Client)
 
-```tsx
+\`\`\`tsx
 import { signOut } from "@/app/actions/auth"
 
 export function LogoutButton() {
@@ -141,7 +141,7 @@ export function LogoutButton() {
     </button>
   )
 }
-```
+\`\`\`
 
 ## Security Features
 
