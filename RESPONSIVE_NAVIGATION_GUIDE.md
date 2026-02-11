@@ -32,42 +32,42 @@ The website implements a seamless responsive navigation system that adapts to di
 ## Implementation Details
 
 ### Tailwind Breakpoints Used
-```
+\`\`\`
 sm: 640px   - Small phones
 md: 768px   - Tablets  
 lg: 1024px  - Laptops/Desktops (threshold for hamburger to disappear)
-```
+\`\`\`
 
 ### Key CSS Classes
 
 **Desktop Navigation**
-```html
+\`\`\`html
 <nav className="hidden lg:flex items-center gap-8">
   <!-- Shows on lg+ screens (1024px and above) -->
 </nav>
-```
+\`\`\`
 
 **Hamburger Button**
-```html
+\`\`\`html
 <button className="lg:hidden p-2 rounded-lg">
   <!-- Hidden on lg+ screens, visible on < 1024px -->
 </button>
-```
+\`\`\`
 
 **Mobile Menu Dropdown**
-```html
+\`\`\`html
 {mobileMenuOpen && (
   <div className="lg:hidden bg-background">
     <!-- Only renders on < 1024px screens -->
   </div>
 )}
-```
+\`\`\`
 
 **GitHub Button Text**
-```html
+\`\`\`html
 <span className="hidden md:inline">Star</span>
 <!-- Hidden on < 768px, shown on md+ -->
-```
+\`\`\`
 
 ## Testing Checklist
 
