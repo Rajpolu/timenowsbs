@@ -430,7 +430,7 @@ export default function Home() {
             </span>
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className="relative w-14 h-7 bg-white/10 border border-white/20 rounded-full transition-colors hover:bg-white/15"
+              className="relative bg-white/10 border border-white/20 rounded-full transition-colors hover:bg-white/15 h-[29px] w-[57px]"
               aria-label="Toggle billing period"
             >
               <div
