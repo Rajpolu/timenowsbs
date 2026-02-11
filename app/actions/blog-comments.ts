@@ -1,6 +1,6 @@
 'use server';
 
-import { getSupabaseClient } from '@/lib/supabase/server';
+import { getSupabaseClient } from '@/lib/supabase/client';
 import { cookies } from 'next/headers';
 
 interface CommentData {
