@@ -106,8 +106,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="format-detection" content="telephone=no" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6162980519594250"
-     crossorigin="anonymous"></script>
         
         {/* JSON-LD Schema Markup */}
         <script
